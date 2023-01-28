@@ -1,0 +1,7 @@
+Java Launcher: C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe
+Arguments: '--inJar, C:\Users\dstan\Desktop\DragonBlockBeyond\build\fg_cache\net\minecraftforge\forge\1.19.3-44.1.0\forge-1.19.3-44.1.0-injected.jar, --outJar, C:\Users\dstan\Desktop\DragonBlockBeyond\build\fg_cache\net\minecraftforge\forge\1.19.3-44.1.0_mapped_official_1.19.3\forge-1.19.3-44.1.0_mapped_official_1.19.3.jar, --logFile, accesstransform.log, --atFile, C:\Users\dstan\Desktop\DragonBlockBeyond\src\main\resources\META-INF\accesstransformer.cfg, --atFile, C:\Users\dstan\Desktop\DragonBlockBeyond\build\_atJar_4\parent_at.cfg'
+Classpath:
+ - C:\Users\dstan\.gradle\caches\forge_gradle\maven_downloader\net\minecraftforge\accesstransformers\8.0.7\accesstransformers-8.0.7-fatjar.jar
+Working directory: C:\Users\dstan\Desktop\DragonBlockBeyond\build\_atJar_4
+Main class: net.minecraftforge.accesstransformer.TransformerProcessor
+====================================
