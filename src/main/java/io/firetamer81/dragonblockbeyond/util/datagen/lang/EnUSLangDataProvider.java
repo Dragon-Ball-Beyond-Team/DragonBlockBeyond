@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.util.datagen.lang;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import net.minecraft.data.DataGenerator;
+import io.firetamer81.dragonblockbeyond.init.handlers.KeyBindHandler;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -17,6 +17,7 @@ public class EnUSLangDataProvider extends LanguageProvider {
         //addBlockTranslations();
         addItemGroupTranslations();
         //addGuiTranslations();
+        addKeyBindTranslations();
     }
 
     protected void addItemTranslations() {
@@ -29,24 +30,33 @@ public class EnUSLangDataProvider extends LanguageProvider {
     }
 
     protected void addItemGroupTranslations() {
-        addItemGroup("dbb_build_tab", "DBB Building Blocks");
-        addItemGroup("dbb_environmental_tab", "DBB Flora");
-        addItemGroup("dbb_machines_tab", "DBB Machines");
-        addItemGroup("dbb_recipe_items_tab", "DBB Recipe Components");
-        addItemGroup("dbb_armour_tab", "DBB Armour");
-        addItemGroup("dbb_tools_tab", "DBB Tools");
-        addItemGroup("dbb_wip_tab", "DBB WIP");
+        addItemGroupTranslation("dbb_build_tab", "DBB Building Blocks");
+        addItemGroupTranslation("dbb_environmental_tab", "DBB Flora");
+        addItemGroupTranslation("dbb_machines_tab", "DBB Machines");
+        addItemGroupTranslation("dbb_recipe_items_tab", "DBB Recipe Components");
+        addItemGroupTranslation("dbb_armour_tab", "DBB Armour");
+        addItemGroupTranslation("dbb_tools_tab", "DBB Tools");
+        addItemGroupTranslation("dbb_wip_tab", "DBB WIP");
     }
 
     protected void addGuiTranslations() {
-        addGui("useRGB", "Use RGB");
-        addGui("useHSB", "Use HSB");
-        addGui("red", "Red");
-        addGui("green", "Green");
-        addGui("blue", "Blue");
-        addGui("hue", "Hue");
-        addGui("saturation", "Saturation");
-        addGui("brightness", "Brightness");
+        //addGui("useRGB", "Use RGB");
+        //addGui("useHSB", "Use HSB");
+        //addGui("red", "Red");
+        //addGui("green", "Green");
+        //addGui("blue", "Blue");
+        //addGui("hue", "Hue");
+        //addGui("saturation", "Saturation");
+        //addGui("brightness", "Brightness");
+    }
+
+
+    protected void addKeyBindTranslations () {
+        //Keybind Category
+        add("key.category.dragonblockbeyond.keybinds", "Keybinds");
+
+        //Keybinds
+        add(KeyBindHandler.TEST_KEYBIND_KEYSTRING, "Test Key");
     }
 
 
@@ -55,8 +65,11 @@ public class EnUSLangDataProvider extends LanguageProvider {
     /****************************************************************/
 
 
-    private void addItemGroup(String key, String name) { add("itemGroup." + key, name); }
-    private void addGui(String suffix, String text) {
+    private void addItemGroupTranslation(String key, String name) {
+        add("itemGroup." + key, name);
+    }
+
+    private void addGuiTranslation(String suffix, String text) {
         add("gui." + DragonBlockBeyond.MODID + "." + suffix, text);
     }
 }
