@@ -1,0 +1,143 @@
+package io.firetamer81.dragonblockbeyond.modules.namek_module.blocks;
+
+import io.firetamer.dragonblockbeyond._modules.namek_module.NamekModule;
+import io.firetamer.dragonblockbeyond.init.CommonObjects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
+
+public class AjisaBush extends BushBlock implements BonemealableBlock {
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_25;
+    private final double growPerTickProbability;
+
+    //TODO The voxel shapes are a little out of whack (larger than they should be). This might be because of how I used inflation values fr the models and voxelshapes don't support that?
+    protected static final VoxelShape BABY_SHAPE = Block.box(2, -2.5, 2, 14, 10.5, 14);
+    protected static final VoxelShape CHILD_SHAPE = Block.box(2, -2, 2, 14, 12, 14);
+    protected static final VoxelShape TEEN_SHAPE = Block.box(2, -1, 2, 14, 14, 14);
+    protected static final VoxelShape ADULT_SHAPE = Block.box(2, 0, 2, 14, 16, 14);
+
+
+
+
+    public AjisaBush(Properties properties) {
+        super(properties);
+
+        this.growPerTickProbability = 0.02;
+        this.registerDefaultState(this.stateDefinition.any().setValue(AGE, Integer.valueOf(0)));
+    }
+
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
+        blockStateBuilder.add(AGE);
+    }
+
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        if (state.getValue(AGE) >= 0 && state.getValue(AGE) <= 3) {
+            return BABY_SHAPE;
+        } else if (state.getValue(AGE) >= 4 && state.getValue(AGE) <= 8) {
+            return CHILD_SHAPE;
+        } else if (state.getValue(AGE) >= 9 && state.getValue(AGE) <= 13) {
+            return TEEN_SHAPE;
+        } else {
+            return ADULT_SHAPE;
+        }
+    }
+
+    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult hitResult) {
+        int i = blockState.getValue(AGE);
+        boolean flag = i == 25;
+
+        if (!flag && player.getItemInHand(interactionHand).is(Items.BONE_MEAL)) {
+            return InteractionResult.PASS;
+        } else if (i == 25) {
+            int j = 1 + level.random.nextInt(2);
+            popResource(level, blockPos, new ItemStack(NamekModule.AJISA_FLOWERS.get(), j + (flag ? 1 : 0)));
+            level.playSound((Player)null, blockPos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            level.setBlock(blockPos, blockState.setValue(AGE, 14), 2);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else {
+            return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
+        }
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState state, BlockGetter getter, BlockPos pos) {
+        return state.is(BlockTags.DIRT)
+                || state.is(Blocks.FARMLAND)
+                || state.is(NamekModule.NAMEK_GRASS_BLOCK.get())
+                || state.is(CommonObjects.CLAY_DIRT.get())
+                || state.is(CommonObjects.COARSE_CLAY_DIRT.get());
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext p_49820_) {
+        return this.defaultBlockState().setValue(AGE, 0);
+    }
+
+    @Override
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(AGE) < 25;
+    }
+
+    @Override
+    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+        if (blockState.getValue(AGE) < 25 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(serverLevel, blockPos, blockState, random.nextDouble() < this.growPerTickProbability)) {
+            serverLevel.setBlockAndUpdate(blockPos, this.cycleAge(blockState));
+            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(serverLevel, blockPos, blockState);
+        }
+    }
+
+    protected BlockState cycleAge(BlockState state) { return state.cycle(AGE); }
+
+    public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
+        BlockPos blockpos = pos.below();
+
+        if (state.getBlock() == this) //Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
+            return reader.getBlockState(blockpos).canSustainPlant(reader, blockpos, Direction.UP, this);
+
+        return this.mayPlaceOn(reader.getBlockState(blockpos), reader, blockpos);
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(BlockGetter p_50897_, BlockPos p_50898_, BlockState p_50899_, boolean p_50900_) {
+        return true;
+    }
+
+    @Override
+    public boolean isBonemealSuccess(Level p_50901_, Random p_50902_, BlockPos p_50903_, BlockState p_50904_) {
+        return true;
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel serverLevel, Random random, BlockPos blockPos, BlockState blockState) {
+        int newAge = Math.min(blockState.getValue(AGE) + 1, 25);
+
+        serverLevel.setBlockAndUpdate(blockPos, blockState.setValue(AGE, Integer.valueOf(newAge)));
+    }
+}

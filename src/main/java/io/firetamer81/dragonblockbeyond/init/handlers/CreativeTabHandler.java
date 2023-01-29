@@ -1,6 +1,7 @@
 package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
+import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -28,7 +29,8 @@ public class CreativeTabHandler {
         }
 
         if (event.getTab() == CreativeTabHandler.MOD_RECIPE_ITEMS) {
-            event.accept(Items.ACACIA_LOG);
+            event.accept(NamekModule.AJISA_FLOWERS);
+            event.accept(NamekModule.NAMEK_KELP_BUDS);
         }
 
         if (event.getTab() == CreativeTabHandler.MOD_ARMOUR_ITEMS) {
@@ -45,7 +47,6 @@ public class CreativeTabHandler {
     }
 
 
-    /****************************************************************/
     //--------------------------------------------------------------//
 
 

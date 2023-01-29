@@ -1,0 +1,47 @@
+package io.firetamer81.dragonblockbeyond.modules.namek_module.blocks;
+
+import io.firetamer.dragonblockbeyond._modules.namek_module.NamekModule;
+import io.firetamer.dragonblockbeyond.init.CommonObjects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Random;
+
+public class NamekGrassPlant extends BushBlock {
+    public NamekGrassPlant(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public OffsetType getOffsetType() {
+        return OffsetType.XZ;
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {
+        return state.is(NamekModule.NAMEK_GRASS_BLOCK.get()) ||
+                state.is(CommonObjects.CLAY_DIRT.get());
+    }
+
+    protected boolean canSurvive(LevelReader reader, BlockPos pos) {
+        BlockPos belowPos = pos.below();
+
+        return reader.getBlockState(belowPos) == NamekModule.NAMEK_GRASS_BLOCK.get().defaultBlockState() ||
+                reader.getBlockState(belowPos) == CommonObjects.CLAY_DIRT.get().defaultBlockState();
+    }
+
+    public void randomTick(BlockState state, ServerLevel server, BlockPos pos, Random rand) {
+        if (!server.isAreaLoaded(pos, 3)) return;
+
+        if (canSurvive(server, pos)) {
+            return;
+        } else {
+            server.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        }
+    }
+}

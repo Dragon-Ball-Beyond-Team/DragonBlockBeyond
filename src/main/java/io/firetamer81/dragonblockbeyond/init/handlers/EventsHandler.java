@@ -111,15 +111,6 @@ public class EventsHandler {
         }
         **/
 
-        /**
-        @SubscribeEvent
-        public static void clientTick(TickEvent.ClientTickEvent event) {
-            final var player = Minecraft.getInstance().player;
-
-            //if (KeyBindHandler.openRadialSkillMenu.consumeClick()) { Minecraft.getInstance().setScreen(new RadialTestScreen()); }
-        }
-         **/
-
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             KeyBindHandler.KeyBindActions();

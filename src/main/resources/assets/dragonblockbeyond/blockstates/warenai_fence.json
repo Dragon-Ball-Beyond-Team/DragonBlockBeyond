@@ -1,0 +1,169 @@
+{
+  "multipart": [
+    {
+      "when": {"block_condition": "polished"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_polished_post" }
+    },
+    {
+      "when": {"block_condition": "normal"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_normal_post" }
+    },
+    {
+      "when": {"block_condition": "scuffed"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_scuffed_post" }
+    },
+    {
+      "when": {"block_condition": "cracked1"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_cracked1_post" }
+    },
+    {
+      "when": {"block_condition": "cracked2"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_cracked2_post" }
+    },
+    {
+      "when": {"block_condition": "cracked3"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_cracked3_post" }
+    },
+    {
+      "when": {"block_condition": "cracked4"},
+      "apply": { "model": "dragonblockbeyond:block/warenai_fence/posts/warenai_fence_cracked4_post" }
+    },
+
+
+
+
+
+    {
+      "when": {"north": "true", "block_condition": "polished"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_polished_side", "uvlock": true}
+    },
+    {
+      "when": {"north": "true", "block_condition": "normal"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_normal_side", "uvlock": true}
+    },
+    {
+      "when": {"north": "true", "block_condition": "scuffed"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_scuffed_side", "uvlock": true}
+    },
+    {
+      "when": {"north": "true", "block_condition": "cracked1"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked1_side", "uvlock": true}
+    },
+    {
+      "when": {"north": "true", "block_condition": "cracked2"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked2_side", "uvlock": true}
+    },
+    {
+      "when": {"north": "true", "block_condition": "cracked3"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked3_side", "uvlock": true}
+    },
+    {
+      "when": {"north": "true", "block_condition": "cracked4"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked4_side", "uvlock": true}
+    },
+
+
+
+
+
+    {
+      "when": {"east": "true", "block_condition": "polished"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_polished_side", "y": 90, "uvlock": true}
+    },
+    {
+      "when": {"east": "true", "block_condition": "normal"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_normal_side", "y": 90, "uvlock": true}
+    },
+    {
+      "when": {"east": "true", "block_condition": "scuffed"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_scuffed_side", "y": 90, "uvlock": true}
+    },
+    {
+      "when": {"east": "true", "block_condition": "cracked1"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked1_side", "y": 90, "uvlock": true}
+    },
+    {
+      "when": {"east": "true", "block_condition": "cracked2"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked2_side", "y": 90, "uvlock": true}
+    },
+    {
+      "when": {"east": "true", "block_condition": "cracked3"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked3_side", "y": 90, "uvlock": true}
+    },
+    {
+      "when": {"east": "true", "block_condition": "cracked4"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked4_side", "y": 90, "uvlock": true}
+    },
+
+
+
+
+
+    {
+      "when": {"south": "true", "block_condition": "polished"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_polished_side", "y": 180, "uvlock": true}
+    },
+    {
+      "when": {"south": "true", "block_condition": "normal"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_normal_side", "y": 180, "uvlock": true}
+    },
+    {
+      "when": {"south": "true", "block_condition": "scuffed"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_scuffed_side", "y": 180, "uvlock": true}
+    },
+    {
+      "when": {"south": "true", "block_condition": "cracked1"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked1_side", "y": 180, "uvlock": true}
+    },
+    {
+      "when": {"south": "true", "block_condition": "cracked2"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked2_side", "y": 180, "uvlock": true}
+    },
+    {
+      "when": {"south": "true", "block_condition": "cracked3"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked3_side", "y": 180, "uvlock": true}
+    },
+    {
+      "when": {"south": "true", "block_condition": "cracked4"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked4_side", "y": 180, "uvlock": true}
+    },
+
+
+
+
+
+    {
+      "when": {"west": "true", "block_condition": "polished"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_polished_side", "y": 270, "uvlock": true}
+    },
+    {
+      "when": {"west": "true", "block_condition": "normal"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_normal_side", "y": 270, "uvlock": true}
+    },
+    {
+      "when": {"west": "true", "block_condition": "scuffed"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_scuffed_side", "y": 270, "uvlock": true}
+    },
+    {
+      "when": {"west": "true", "block_condition": "cracked1"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked1_side", "y": 270, "uvlock": true}
+    },
+    {
+      "when": {"west": "true", "block_condition": "cracked2"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked2_side", "y": 270, "uvlock": true}
+    },
+    {
+      "when": {"west": "true", "block_condition": "cracked3"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked3_side", "y": 270, "uvlock": true}
+    },
+    {
+      "when": {"west": "true", "block_condition": "cracked4"},
+      "apply": {"model": "dragonblockbeyond:block/warenai_fence/sides/warenai_fence_cracked4_side", "y": 270, "uvlock": true}
+    }
+
+
+
+
+
+  ]
+}

@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.util.datagen.lang;
+package io.firetamer81.dragonblockbeyond.util.datagen.providers.lang;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import io.firetamer81.dragonblockbeyond.init.handlers.KeyBindHandler;

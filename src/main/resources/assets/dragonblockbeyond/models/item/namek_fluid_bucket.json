@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dragonblockbeyond:item/namek_fluid_bucket"
+  }
+}
