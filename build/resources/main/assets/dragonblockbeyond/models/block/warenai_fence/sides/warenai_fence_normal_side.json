@@ -1,6 +1,0 @@
-{
-  "parent": "dragonblockbeyond:block/templates/fence_side",
-  "textures": {
-    "all": "dragonblockbeyond:block/warenai_blocks/warenai_block"
-  }
-}
