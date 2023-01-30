@@ -1,7 +1,13 @@
 {
-  "minecraft:recipes/transportation/birch_chest_boat": {
+  "minecraft:recipes/tools/stone_shovel": {
     "criteria": {
-      "has_boat": "2023-01-28 21:29:26 -0500"
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/stone_hoe": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
     },
     "done": true
   },
@@ -11,9 +17,96 @@
     },
     "done": true
   },
+  "minecraft:recipes/redstone/lever": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/cobblestone_stairs_from_cobblestone_stonecutting": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_chest_boat": {
+    "criteria": {
+      "has_boat": "2023-01-28 21:29:26 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/oak_chest_boat": {
+    "criteria": {
+      "has_boat": "2023-01-28 21:29:26 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/mangrove_chest_boat": {
+    "criteria": {
+      "has_boat": "2023-01-28 21:29:26 -0500"
+    },
+    "done": true
+  },
+  "minecraft:story/mine_stone": {
+    "criteria": {
+      "get_stone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/stone": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/cobblestone_slab": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/furnace": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:frozen_river": "2023-01-28 21:29:54 -0500",
+      "minecraft:snowy_plains": "2023-01-21 22:33:11 -0500",
+      "minecraft:frozen_ocean": "2023-01-28 21:29:37 -0500",
+      "minecraft:snowy_beach": "2023-01-28 21:29:36 -0500"
+    },
+    "done": false
+  },
+  "minecraft:recipes/building_blocks/cobblestone_stairs": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_chest_boat": {
+    "criteria": {
+      "has_boat": "2023-01-28 21:29:26 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/cobblestone_slab_from_cobblestone_stonecutting": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
   "minecraft:recipes/transportation/birch_boat": {
     "criteria": {
       "in_water": "2023-01-28 21:29:37 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/chest": {
+    "criteria": {
+      "has_lots_of_items": "2023-01-29 22:02:23 -0500"
     },
     "done": true
   },
@@ -23,15 +116,27 @@
     },
     "done": true
   },
+  "minecraft:recipes/combat/stone_sword": {
+    "criteria": {
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
   "minecraft:recipes/transportation/mangrove_boat": {
     "criteria": {
       "in_water": "2023-01-28 21:29:37 -0500"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/acacia_chest_boat": {
+  "minecraft:recipes/decorations/cobblestone_wall": {
     "criteria": {
-      "has_boat": "2023-01-28 21:29:26 -0500"
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
+    },
+    "done": true
+  },
+  "minecraft:story/root": {
+    "criteria": {
+      "crafting_table": "2023-01-29 22:02:23 -0500"
     },
     "done": true
   },
@@ -47,15 +152,15 @@
     },
     "done": true
   },
-  "minecraft:recipes/transportation/oak_chest_boat": {
+  "minecraft:recipes/tools/stone_pickaxe": {
     "criteria": {
-      "has_boat": "2023-01-28 21:29:26 -0500"
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/mangrove_chest_boat": {
+  "minecraft:recipes/tools/stone_axe": {
     "criteria": {
-      "has_boat": "2023-01-28 21:29:26 -0500"
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
     },
     "done": true
   },
@@ -83,14 +188,11 @@
     },
     "done": true
   },
-  "minecraft:adventure/adventuring_time": {
+  "minecraft:recipes/decorations/cobblestone_wall_from_cobblestone_stonecutting": {
     "criteria": {
-      "minecraft:frozen_river": "2023-01-28 21:29:54 -0500",
-      "minecraft:snowy_plains": "2023-01-21 22:33:11 -0500",
-      "minecraft:frozen_ocean": "2023-01-28 21:29:37 -0500",
-      "minecraft:snowy_beach": "2023-01-28 21:29:36 -0500"
+      "has_cobblestone": "2023-01-29 22:02:09 -0500"
     },
-    "done": false
+    "done": true
   },
   "DataVersion": 3218
 }

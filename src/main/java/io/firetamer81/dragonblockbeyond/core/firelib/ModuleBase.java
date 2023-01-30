@@ -18,6 +18,15 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * The purpose of this class is to have pre-made registration methods for every type of
+ * deferred registry, with the ability to add the registry object to any DeferredRegister
+ * variable anywhere in the project.
+ * -------------------------------------------------------------------------------------------------------------------------
+ * The reason for this class existing; now you can have ONE class with all of your deferred registers
+ * and thus only ONE class to add to your mod's main file initiation method for object registration.
+ */
+
 public class ModuleBase {
 
 

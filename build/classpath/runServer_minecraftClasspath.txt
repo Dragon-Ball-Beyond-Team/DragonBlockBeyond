@@ -1,4 +1,4 @@
-C:\Users\dstan\Desktop\DragonBlockBeyond\build\fg_cache\net\minecraftforge\forge\1.19.3-44.1.0_mapped_official_1.19.3\forge-1.19.3-44.1.0_mapped_official_1.19.3.jar
+C:\Users\dstan\Desktop\DragonBlockBeyond\build\fg_cache\net\minecraftforge\forge\1.19.3-44.1.0_mapped_official_1.19.3\forge-1.19.3-44.1.0_mapped_official_1.19.3-recomp.jar
 C:\Users\dstan\.gradle\caches\forge_gradle\minecraft_repo\versions\1.19.3\client-extra.jar
 C:\Users\dstan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.19.3-44.1.0\e0a9d17dab17f9c102e6adfc00961565a2b1e2c7\javafmllanguage-1.19.3-44.1.0.jar
 C:\Users\dstan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.19.3-44.1.0\8b73cc225c8f1add358e3284c709eef8430af51\lowcodelanguage-1.19.3-44.1.0.jar

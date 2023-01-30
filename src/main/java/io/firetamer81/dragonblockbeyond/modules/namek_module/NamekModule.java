@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.modules.namek_module;
 
 import io.firetamer81.dragonblockbeyond.core.firelib.ModuleBase;
-import io.firetamer81.dragonblockbeyond.init.handlers.RegistryHandler;
+import io.firetamer81.dragonblockbeyond.handlers.RegistryHandler;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 

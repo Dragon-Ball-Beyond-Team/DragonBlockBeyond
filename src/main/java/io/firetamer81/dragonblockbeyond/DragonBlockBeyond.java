@@ -1,16 +1,11 @@
 package io.firetamer81.dragonblockbeyond;
 
 import com.mojang.logging.LogUtils;
-import io.firetamer81.dragonblockbeyond.init.handlers.RegistryHandler;
-import io.firetamer81.dragonblockbeyond.init.handlers.TextureHandler;
-import net.minecraft.world.level.block.DispenserBlock;
+import io.firetamer81.dragonblockbeyond.handlers.RegistryHandler;
+import io.firetamer81.dragonblockbeyond.handlers.TextureHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -23,7 +18,7 @@ public class DragonBlockBeyond {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         RegistryHandler.init(modEventBus);
-        //TextureHandler.init();
+        TextureHandler.init();
 
         //modEventBus.addListener(this::setup);
         //modEventBus.addListener(this::enqueueIMC);
