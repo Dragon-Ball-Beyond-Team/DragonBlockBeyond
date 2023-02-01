@@ -1,11 +1,11 @@
-package io.firetamer81.dragonblockbeyond.handlers.datagen;
+package io.firetamer81.dragonblockbeyond.init.handlers.datagen;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.handlers.datagen.providers.ModItemModelProvider;
-import io.firetamer81.dragonblockbeyond.handlers.datagen.providers.ModRecipeProvider;
-import io.firetamer81.dragonblockbeyond.handlers.datagen.providers.lang.EnUSLangDataProvider;
-import io.firetamer81.dragonblockbeyond.handlers.datagen.providers.tags.*;
-import io.firetamer81.dragonblockbeyond.handlers.datagen.providers.ModBlockStateProvider;
+import io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.ModItemModelProvider;
+import io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.ModRecipeProvider;
+import io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.lang.EnUSLangDataProvider;
+import io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.ModBlockStateProvider;
+import io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

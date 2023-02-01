@@ -1,7 +1,7 @@
-package io.firetamer81.dragonblockbeyond.handlers.datagen.providers.lang;
+package io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.lang;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.handlers.KeyBindHandler;
+import io.firetamer81.dragonblockbeyond.init.handlers.KeyBindHandler;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 

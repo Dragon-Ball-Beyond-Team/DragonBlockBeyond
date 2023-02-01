@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.handlers;
+package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import net.minecraft.resources.ResourceLocation;
 

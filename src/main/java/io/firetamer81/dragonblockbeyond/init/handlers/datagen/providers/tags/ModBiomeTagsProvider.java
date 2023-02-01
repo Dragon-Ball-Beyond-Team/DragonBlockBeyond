@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.handlers.datagen.providers.tags;
+package io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.tags;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import net.minecraft.core.HolderLookup;

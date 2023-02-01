@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.handlers;
+package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;

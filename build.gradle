@@ -4,13 +4,14 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '1.0'
+version = '0.1.0'
 group = 'io.firetamer81.dragonblockbeyond'
 archivesBaseName = 'dragonblockbeyond'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
 minecraft {
     mappings channel: 'official', version: '1.19.3'
 
@@ -82,10 +83,27 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-repositories {}
+repositories {
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.19.3-44.1.0'
+
+    //curse.maven:<descriptor>-<projectid>:<fileids>
+        //<descriptor> -> Can be anything you want. Best to make it the name of the dependency
+        //<projectid> -> The project id of the file you want to add as a dependency.
+            //The Project ID can be found on the About Project section of the project
+        //<fileids> -> The file ids of the file you want to add as a dependency, plus any optional classifiers
+            //To get a File ID, go to the download page of file you want to use, and the file ID will be the last number set in the URL.
+
+    implementation fg.deobf("curse.maven:jei-238222:4371830")
+    implementation fg.deobf("curse.maven:top-245211:4159743")
 }
 
 jar {
