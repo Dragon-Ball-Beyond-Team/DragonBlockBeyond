@@ -1,6 +1,0 @@
-{
-  "parent": "dragonblockbeyond:block/templates/template_wall_side",
-  "textures": {
-    "wall": "dragonblockbeyond:block/warenai_blocks/warenai_block"
-  }
-}
