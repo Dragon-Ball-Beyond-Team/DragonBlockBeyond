@@ -3,6 +3,7 @@ package io.firetamer81.dragonblockbeyond;
 import com.mojang.logging.LogUtils;
 import io.firetamer81.dragonblockbeyond.init.handlers.RegistryHandler;
 import io.firetamer81.dragonblockbeyond.init.handlers.TextureHandler;
+import io.firetamer81.dragonblockbeyond.network.ModMessages;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +20,7 @@ public class DragonBlockBeyond {
 
         RegistryHandler.init(modEventBus);
         TextureHandler.init();
+        ModMessages.register();
 
         //modEventBus.addListener(this::setup);
         //modEventBus.addListener(this::enqueueIMC);

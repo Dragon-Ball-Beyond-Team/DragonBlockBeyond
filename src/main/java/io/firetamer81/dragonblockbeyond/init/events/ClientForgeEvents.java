@@ -7,8 +7,8 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = DragonBlockBeyond.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ForgeModEvents {
+@Mod.EventBusSubscriber(modid = DragonBlockBeyond.MODID, value = Dist.CLIENT)
+public class ClientForgeEvents {
 
     @SubscribeEvent
     public static void onKeyInput(InputEvent.Key event) {

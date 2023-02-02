@@ -1,47 +1,42 @@
 package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
+import io.firetamer81.dragonblockbeyond.network.ModMessages;
+import io.firetamer81.dragonblockbeyond.network.packets.PlayerKiPacket_CtoS;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 
-/**
- * Keybinds are client side only. From what I understand, packets are required to do server side stuff with keybinds
- */
+@Mod.EventBusSubscriber(modid = DragonBlockBeyond.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class KeyBindHandler {
     private KeyBindHandler() {}
 
     public static final String KEY_CATEGORY_DBB = "key.category.dragonblockbeyond.keybinds";
-
-    public static KeyMapping testKey;
     public static final String TEST_KEYBIND_KEYSTRING = "key.dragonblockbeyond.test_key";
 
+    public static KeyMapping TEST_KEY = new KeyMapping(TEST_KEYBIND_KEYSTRING, KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, KEY_CATEGORY_DBB);
 
-    /****************************************************************/
-    //--------------------------------------------------------------//
 
-
-    public static void init() {
-        testKey = registerKeyBind(TEST_KEYBIND_KEYSTRING, KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, KEY_CATEGORY_DBB);
-    }
 
     public static void KeyBindActions() {
-        if (testKey.consumeClick()) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Pressed a Key!"));
-        }
+        if (TEST_KEY.consumeClick()) {
+            /*Minecraft.getInstance().player.sendSystemMessage(
+                    Component.literal("Pressed a Key!"));*/
 
-        //More Keybind Actions can go here, and they will automatically be put into the EventsHandler.
+            ModMessages.sendToServer(new PlayerKiPacket_CtoS());
+        }
     }
 
-    public static KeyMapping registerKeyBind(String keyString, KeyConflictContext conflictContext, InputConstants.Type inputConstantType, int keycode, String category) {
-        final var key = new KeyMapping(keyString, conflictContext, inputConstantType, keycode, category);
-
-        Minecraft.getInstance().options.keyMappings = ArrayUtils.add(
-                Minecraft.getInstance().options.keyMappings, key);
-
-        return key;
+    @SubscribeEvent
+    public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+        event.register(KeyBindHandler.TEST_KEY);
     }
 }
