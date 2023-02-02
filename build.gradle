@@ -106,7 +106,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven hundredMedia.get100MediaMaven()
+    maven hundredMedia.get100MediaPublicMaven()
 
     maven {
         name = 'Cursemaven'
