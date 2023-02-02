@@ -1,7 +1,8 @@
 package io.firetamer81.dragonblockbeyond.network.packets;
 
+import dev._100media.capabilitysyncer.network.IPacket;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki.PlayerKiProvider;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki.KiHolderAttacher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -10,25 +11,25 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.simple.SimpleChannel;
 
-import java.util.function.Supplier;
-
-public class PlayerKiPacket_CtoS {
+public record PlayerKiPacket_CtoS() implements IPacket {
     private static final String MESSAGE_ABSORB_KI = "message." + DragonBlockBeyond.MODID + ".add_ki";
     private static final String MESSAGE_UNABLE_TO_ABSORB_KI = "message." + DragonBlockBeyond.MODID + ".no_ki_to_absorb";
+    public PlayerKiPacket_CtoS(FriendlyByteBuf packetBuf) {
+        this();
+    }
 
-    public PlayerKiPacket_CtoS() {}
-    public PlayerKiPacket_CtoS(FriendlyByteBuf buf) {}
-    public void toBytes(FriendlyByteBuf buf) {}
 
     private boolean hasGrassAroundThem(ServerPlayer player, ServerLevel level, int size) {
         return level.getBlockStates(player.getBoundingBox().inflate(size))
                 .filter(state -> state.is(Blocks.GRASS_BLOCK)).toArray().length > 0;
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
+    @Override
+    public void handle(NetworkEvent.Context context) {
         context.enqueueWork(() -> {
             //Get the Server Level & Player
             ServerPlayer player = context.getSender();
@@ -41,7 +42,7 @@ public class PlayerKiPacket_CtoS {
                 level.playSound(null, player.getOnPos(), SoundEvents.CONDUIT_ACTIVATE, SoundSource.PLAYERS,
                         0.5F, level.random.nextFloat() * 0.1F + 0.9F);
 
-                player.getCapability(PlayerKiProvider.PLAYER_KI).ifPresent(ki -> {
+                KiHolderAttacher.getHolder(player).ifPresent(ki -> {
                     // increase the player's ki
                     ki.addKi(1);
 
@@ -53,13 +54,20 @@ public class PlayerKiPacket_CtoS {
                 // Notify the player that there is no water around!
                 player.sendSystemMessage(Component.translatable(MESSAGE_UNABLE_TO_ABSORB_KI).withStyle(ChatFormatting.RED));
                 // Output the current thirst level
-                player.getCapability(PlayerKiProvider.PLAYER_KI).ifPresent(ki -> {
+                KiHolderAttacher.getHolder(player).ifPresent(ki -> {
                     player.sendSystemMessage(Component.literal("Current Ki " + ki.getKi())
                             .withStyle(ChatFormatting.AQUA));
                 });
             }
         });
+    }
 
-        return true;
+    public static void register(SimpleChannel channel, int id) {
+        IPacket.register(channel, id, NetworkDirection.PLAY_TO_SERVER, PlayerKiPacket_CtoS.class, PlayerKiPacket_CtoS::new);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf packetBuf) {
+
     }
 }

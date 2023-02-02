@@ -2,16 +2,14 @@ package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.network.ModMessages;
+import io.firetamer81.dragonblockbeyond.network.NetworkHandler;
 import io.firetamer81.dragonblockbeyond.network.packets.PlayerKiPacket_CtoS;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(modid = DragonBlockBeyond.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -31,7 +29,7 @@ public class KeyBindHandler {
             /*Minecraft.getInstance().player.sendSystemMessage(
                     Component.literal("Pressed a Key!"));*/
 
-            ModMessages.sendToServer(new PlayerKiPacket_CtoS());
+            NetworkHandler.INSTANCE.sendToServer(new PlayerKiPacket_CtoS());
         }
     }
 
