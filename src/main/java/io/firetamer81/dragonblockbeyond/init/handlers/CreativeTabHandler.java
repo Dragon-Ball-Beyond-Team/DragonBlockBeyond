@@ -2,6 +2,7 @@ package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -60,24 +61,31 @@ public class CreativeTabHandler {
     @SubscribeEvent
     public static void registerCreativeTabs(CreativeModeTabEvent.Register event) {
         MOD_BUILDING_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_build_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.STONE_BRICKS)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.STONE_BRICKS))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_build_tab")).build());
 
         MOD_ENVIRONMENTAL_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_environmental_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.WEEPING_VINES)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.WEEPING_VINES))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_environmental_tab")).build());
 
         MOD_MACHINE_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_machines_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.FURNACE)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.FURNACE))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_machines_tab")).build());
 
         MOD_RECIPE_ITEMS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_recipe_items_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.CRAFTING_TABLE)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.CRAFTING_TABLE))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_recipe_items_tab")).build());
 
         MOD_ARMOUR_ITEMS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_armour_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.ARMOR_STAND)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.ARMOR_STAND))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_armour_tab")).build());
 
         MOD_TOOLS_ITEMS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_tools_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.NETHERITE_PICKAXE)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.NETHERITE_PICKAXE))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_tools_tab")).build());
 
         MOD_WIP_OBJECTS = event.registerCreativeModeTab(new ResourceLocation(DragonBlockBeyond.MODID, "dbb_wip_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.BARRIER)).build());
+                builder -> builder.icon(() -> new ItemStack(Items.BARRIER))
+                        .title(Component.translatable("itemGroup.dragonblockbeyond.dbb_wip_tab")).build());
     }
 }

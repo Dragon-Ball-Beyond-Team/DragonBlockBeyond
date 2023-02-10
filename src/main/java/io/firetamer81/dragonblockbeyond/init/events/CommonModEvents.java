@@ -1,16 +1,9 @@
 package io.firetamer81.dragonblockbeyond.init.events;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki.KiHolder;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki.KiHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test.KiHolderAttacher;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;

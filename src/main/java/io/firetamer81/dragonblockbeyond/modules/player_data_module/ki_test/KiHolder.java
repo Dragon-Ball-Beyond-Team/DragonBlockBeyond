@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.modules.player_data_module.ki;
+package io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test;
 
 import dev._100media.capabilitysyncer.core.PlayerCapability;
 import dev._100media.capabilitysyncer.network.EntityCapabilityStatusPacket;
@@ -28,6 +28,11 @@ public class KiHolder extends PlayerCapability {
         this.ki = Math.max(ki - sub, MINIMUM_KI);
         updateTracking();
     }
+
+
+    /*----------------------------------------------------------------*/
+    /*----------------------------------------------------------------*/
+
 
     @Override
     public EntityCapabilityStatusPacket createUpdatePacket() {

@@ -1,8 +1,8 @@
-package io.firetamer81.dragonblockbeyond.network.packets;
+package io.firetamer81.dragonblockbeyond.network.packets.ClientToServer;
 
 import dev._100media.capabilitysyncer.network.IPacket;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki.KiHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test.KiHolderAttacher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -15,13 +15,11 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-public record PlayerKiPacket_CtoS() implements IPacket {
+public record PlayerKiPacket() implements IPacket {
     private static final String MESSAGE_ABSORB_KI = "message." + DragonBlockBeyond.MODID + ".add_ki";
     private static final String MESSAGE_UNABLE_TO_ABSORB_KI = "message." + DragonBlockBeyond.MODID + ".no_ki_to_absorb";
-    public PlayerKiPacket_CtoS(FriendlyByteBuf packetBuf) {
-        this();
-    }
 
+    public PlayerKiPacket(FriendlyByteBuf packetBuf) { this(); }
 
     private boolean hasGrassAroundThem(ServerPlayer player, ServerLevel level, int size) {
         return level.getBlockStates(player.getBoundingBox().inflate(size))
@@ -51,9 +49,9 @@ public record PlayerKiPacket_CtoS() implements IPacket {
                             .withStyle(ChatFormatting.AQUA));
                 });
             } else {
-                // Notify the player that there is no water around!
+                // Notify the player that there is no grass around!
                 player.sendSystemMessage(Component.translatable(MESSAGE_UNABLE_TO_ABSORB_KI).withStyle(ChatFormatting.RED));
-                // Output the current thirst level
+                // Output the current Ki level
                 KiHolderAttacher.getHolder(player).ifPresent(ki -> {
                     player.sendSystemMessage(Component.literal("Current Ki " + ki.getKi())
                             .withStyle(ChatFormatting.AQUA));
@@ -63,7 +61,7 @@ public record PlayerKiPacket_CtoS() implements IPacket {
     }
 
     public static void register(SimpleChannel channel, int id) {
-        IPacket.register(channel, id, NetworkDirection.PLAY_TO_SERVER, PlayerKiPacket_CtoS.class, PlayerKiPacket_CtoS::new);
+        IPacket.register(channel, id, NetworkDirection.PLAY_TO_SERVER, PlayerKiPacket.class, PlayerKiPacket::new);
     }
 
     @Override

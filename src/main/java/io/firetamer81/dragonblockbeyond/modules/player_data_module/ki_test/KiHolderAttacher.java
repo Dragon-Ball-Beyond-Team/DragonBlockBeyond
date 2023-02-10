@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.modules.player_data_module.ki;
+package io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test;
 
 import dev._100media.capabilitysyncer.core.CapabilityAttacher;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;

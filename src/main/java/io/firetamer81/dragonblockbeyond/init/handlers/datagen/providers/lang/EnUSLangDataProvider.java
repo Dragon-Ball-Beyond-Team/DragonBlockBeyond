@@ -2,6 +2,7 @@ package io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.lang;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import io.firetamer81.dragonblockbeyond.init.handlers.KeyBindHandler;
+import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -13,7 +14,7 @@ public class EnUSLangDataProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        //addItemTranslations();
+        addItemTranslations();
         //addBlockTranslations();
         addItemGroupTranslations();
         //addGuiTranslations();
@@ -21,8 +22,8 @@ public class EnUSLangDataProvider extends LanguageProvider {
     }
 
     protected void addItemTranslations() {
-        //add(CommonObjects.TEST_ITEM.get(), "Test Item");
-        //add(CommonObjects.TEST_BLOCK.get(), "Test Block");
+        add(NamekModule.AJISA_FLOWERS.get(), "Ajisa Flowers");
+        add(NamekModule.NAMEK_KELP_BUDS.get(), "Namek Kelp Buds");
     }
 
     protected void addBlockTranslations() {
@@ -65,7 +66,7 @@ public class EnUSLangDataProvider extends LanguageProvider {
 
 
     private void addItemGroupTranslation(String key, String name) {
-        add("itemGroup." + key, name);
+        add("itemGroup.dragonblockbeyond." + key, name);
     }
 
     private void addGuiTranslation(String suffix, String text) {

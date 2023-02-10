@@ -3,8 +3,10 @@ package io.firetamer81.dragonblockbeyond.network;
 import com.google.common.collect.ImmutableList;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki.KiHolderAttacher;
-import io.firetamer81.dragonblockbeyond.network.packets.PlayerKiPacket_CtoS;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test.KiHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data.StrengthHolderAttacher;
+import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerKiPacket;
+import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerStrengthDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -25,10 +27,12 @@ public class NetworkHandler {
     public static void register() {
         List<BiConsumer<SimpleChannel, Integer>> packets = ImmutableList.<BiConsumer<SimpleChannel, Integer>>builder()
                 .add(SimpleEntityCapabilityStatusPacket::register)
-                .add(PlayerKiPacket_CtoS::register)
+                .add(PlayerKiPacket::register)
+                .add(PlayerStrengthDataPacket::register)
                 .build();
 
         SimpleEntityCapabilityStatusPacket.registerRetriever(KiHolderAttacher.RESOURCE_LOCATION, KiHolderAttacher::getHolderUnwrap);
+        SimpleEntityCapabilityStatusPacket.registerRetriever(StrengthHolderAttacher.RESOURCE_LOCATION, StrengthHolderAttacher::getHolderUnwrap);
 
         packets.forEach(consumer -> consumer.accept(INSTANCE, getNextId()));
     }
