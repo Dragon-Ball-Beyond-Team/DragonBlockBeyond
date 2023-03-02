@@ -3,6 +3,7 @@ package io.firetamer81.dragonblockbeyond;
 import com.mojang.logging.LogUtils;
 import io.firetamer81.dragonblockbeyond.init.handlers.RegistryHandler;
 import io.firetamer81.dragonblockbeyond.init.handlers.TextureHandler;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.constitution_data.ConstitutionHolderAttacher;
 import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test.KiHolderAttacher;
 import io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data.StrengthHolderAttacher;
 import io.firetamer81.dragonblockbeyond.network.NetworkHandler;
@@ -35,6 +36,7 @@ public class DragonBlockBeyond {
 
         KiHolderAttacher.register();
         StrengthHolderAttacher.register();
+        ConstitutionHolderAttacher.register();
     }
 
     @SubscribeEvent

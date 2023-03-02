@@ -3,8 +3,10 @@ package io.firetamer81.dragonblockbeyond.network;
 import com.google.common.collect.ImmutableList;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.constitution_data.ConstitutionHolderAttacher;
 import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test.KiHolderAttacher;
 import io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data.StrengthHolderAttacher;
+import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerConstitutionDataPacket;
 import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerKiPacket;
 import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerStrengthDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -29,10 +31,12 @@ public class NetworkHandler {
                 .add(SimpleEntityCapabilityStatusPacket::register)
                 .add(PlayerKiPacket::register)
                 .add(PlayerStrengthDataPacket::register)
+                .add(PlayerConstitutionDataPacket::register)
                 .build();
 
         SimpleEntityCapabilityStatusPacket.registerRetriever(KiHolderAttacher.RESOURCE_LOCATION, KiHolderAttacher::getHolderUnwrap);
         SimpleEntityCapabilityStatusPacket.registerRetriever(StrengthHolderAttacher.RESOURCE_LOCATION, StrengthHolderAttacher::getHolderUnwrap);
+        SimpleEntityCapabilityStatusPacket.registerRetriever(ConstitutionHolderAttacher.RESOURCE_LOCATION, ConstitutionHolderAttacher::getHolderUnwrap);
 
         packets.forEach(consumer -> consumer.accept(INSTANCE, getNextId()));
     }

@@ -3,6 +3,7 @@ package io.firetamer81.dragonblockbeyond.init.handlers;
 import com.mojang.blaze3d.platform.InputConstants;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import io.firetamer81.dragonblockbeyond.network.NetworkHandler;
+import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerConstitutionDataPacket;
 import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerKiPacket;
 import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.PlayerStrengthDataPacket;
 import net.minecraft.client.KeyMapping;
@@ -41,7 +42,7 @@ public class KeyBindHandler {
         }
 
         if (STAT_DISPLAY_BUTTON.consumeClick()) {
-            NetworkHandler.INSTANCE.sendToServer(new PlayerStrengthDataPacket());
+            NetworkHandler.INSTANCE.sendToServer(new PlayerConstitutionDataPacket());
         }
     }
 
