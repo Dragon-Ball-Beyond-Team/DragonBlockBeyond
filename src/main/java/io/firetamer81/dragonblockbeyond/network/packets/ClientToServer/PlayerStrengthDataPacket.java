@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.network.packets.ClientToServer;
 
 import dev._100media.capabilitysyncer.network.IPacket;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data.StrengthHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.strength_data.StrengthHolderAttacher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -30,6 +30,10 @@ public record PlayerStrengthDataPacket() implements IPacket {
 
 
                 player.sendSystemMessage(Component.literal(
+                        "   - Current Jaw Strength = " + strength.getJawStrength())
+                        .withStyle(ChatFormatting.YELLOW));
+
+                player.sendSystemMessage(Component.literal(
                         "   - Current Neck Strength = " + strength.getNeckStrength())
                         .withStyle(ChatFormatting.YELLOW));
 
@@ -42,11 +46,11 @@ public record PlayerStrengthDataPacket() implements IPacket {
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
-                        "   - Current Right Bicep Strength = " + strength.getRightBicepStrength())
+                        "   - Current Right Upper Arm Strength = " + strength.getRightUpperArmStrength())
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
-                        "   - Current Left Bicep Strength = " + strength.getLeftBicepStrength())
+                        "   - Current Left Upper Arm Strength = " + strength.getLeftUpperArmStrength())
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
@@ -70,18 +74,19 @@ public record PlayerStrengthDataPacket() implements IPacket {
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
-                        "   - Current Right Calf Strength = " + strength.getRightLowerLegStrength())
+                        "   - Current Right Lower Leg Strength = " + strength.getRightLowerLegStrength())
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
-                        "   - Current Left Calf Strength = " + strength.getLeftLowerLegStrength())
+                        "   - Current Left Lower Leg Strength = " + strength.getLeftLowerLegStrength())
                         .withStyle(ChatFormatting.YELLOW));
 
+                strength.addToJawStrength(1);
                 strength.addToNeckStrength(1);
                 strength.addToPectoralisStrength(1);
                 strength.addToBackStrength(1);
-                strength.addToRightBicepStrength(1);
-                strength.addToLeftBicepStrength(1);
+                strength.addToRightUpperArmStrength(1);
+                strength.addToLeftUpperArmStrength(1);
                 strength.addToRightForearmStrength(1);
                 strength.addToLeftForearmStrength(1);
                 strength.addToCoreStrength(1);

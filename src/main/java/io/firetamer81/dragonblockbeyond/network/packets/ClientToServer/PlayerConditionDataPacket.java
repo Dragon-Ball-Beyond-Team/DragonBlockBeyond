@@ -2,7 +2,7 @@ package io.firetamer81.dragonblockbeyond.network.packets.ClientToServer;
 
 import dev._100media.capabilitysyncer.network.IPacket;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ki_test.KiHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.player_condition.PlayerConditionHolderAttacher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -15,11 +15,11 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-public record PlayerKiPacket() implements IPacket {
+public record PlayerConditionDataPacket() implements IPacket {
     private static final String MESSAGE_ABSORB_KI = "message." + DragonBlockBeyond.MODID + ".add_ki";
     private static final String MESSAGE_UNABLE_TO_ABSORB_KI = "message." + DragonBlockBeyond.MODID + ".no_ki_to_absorb";
 
-    public PlayerKiPacket(FriendlyByteBuf packetBuf) { this(); }
+    public PlayerConditionDataPacket(FriendlyByteBuf packetBuf) { this(); }
 
     private boolean hasGrassAroundThem(ServerPlayer player, ServerLevel level, int size) {
         return level.getBlockStates(player.getBoundingBox().inflate(size))
@@ -40,7 +40,7 @@ public record PlayerKiPacket() implements IPacket {
                 level.playSound(null, player.getOnPos(), SoundEvents.CONDUIT_ACTIVATE, SoundSource.PLAYERS,
                         0.5F, level.random.nextFloat() * 0.1F + 0.9F);
 
-                KiHolderAttacher.getHolder(player).ifPresent(ki -> {
+                PlayerConditionHolderAttacher.getHolder(player).ifPresent(ki -> {
                     // increase the player's ki
                     ki.addKi(1);
 
@@ -52,7 +52,7 @@ public record PlayerKiPacket() implements IPacket {
                 // Notify the player that there is no grass around!
                 player.sendSystemMessage(Component.translatable(MESSAGE_UNABLE_TO_ABSORB_KI).withStyle(ChatFormatting.RED));
                 // Output the current Ki level
-                KiHolderAttacher.getHolder(player).ifPresent(ki -> {
+                PlayerConditionHolderAttacher.getHolder(player).ifPresent(ki -> {
                     player.sendSystemMessage(Component.literal("Current Ki " + ki.getKi())
                             .withStyle(ChatFormatting.AQUA));
                 });
@@ -61,7 +61,7 @@ public record PlayerKiPacket() implements IPacket {
     }
 
     public static void register(SimpleChannel channel, int id) {
-        IPacket.register(channel, id, NetworkDirection.PLAY_TO_SERVER, PlayerKiPacket.class, PlayerKiPacket::new);
+        IPacket.register(channel, id, NetworkDirection.PLAY_TO_SERVER, PlayerConditionDataPacket.class, PlayerConditionDataPacket::new);
     }
 
     @Override

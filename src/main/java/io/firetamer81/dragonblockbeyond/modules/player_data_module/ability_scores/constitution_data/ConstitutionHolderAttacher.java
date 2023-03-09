@@ -1,9 +1,7 @@
-package io.firetamer81.dragonblockbeyond.modules.player_data_module.constitution_data;
+package io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.constitution_data;
 
 import dev._100media.capabilitysyncer.core.CapabilityAttacher;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data.StrengthHolder;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data.StrengthHolderAttacher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

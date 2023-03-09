@@ -1,12 +1,16 @@
-package io.firetamer81.dragonblockbeyond.modules.player_data_module.strength_data;
+package io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.strength_data;
 
 import dev._100media.capabilitysyncer.core.PlayerCapability;
 import dev._100media.capabilitysyncer.network.EntityCapabilityStatusPacket;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
+import io.firetamer81.dragonblockbeyond.core.firelib.math.MathHelper;
 import io.firetamer81.dragonblockbeyond.network.NetworkHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.simple.SimpleChannel;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class StrengthHolder extends PlayerCapability {
     protected StrengthHolder(Player player) {
@@ -14,50 +18,64 @@ public class StrengthHolder extends PlayerCapability {
     }
 
     private int overallStrengthAbilityScore;
-    private final int MINIMUM_STRENGTH = 1;
-    private final int MAXIMUM_STRENGTH = 130000;
     public int getStrengthAbilityScore() { return overallStrengthAbilityScore; }
+    public void updateStrengthAbilityScore() {
+        List<Integer> nums = Arrays.asList(
+                this.overallStrengthAbilityScore,
+                this.neckStrength,
+                this.pectoralisStrength,
+                this.backStrength,
+                this.rightUpperArmStrength,
+                this.leftUpperArmStrength,
+                this.rightForearmStrength,
+                this.leftForearmStrength,
+                this.coreStrength,
+                this.rightThighStrength,
+                this.leftThighStrength,
+                this.rightLowerLegStrength,
+                this.leftLowerLegStrength
+        );
 
-    public void addToStrengthAbilityScore(int add) {
-        this.overallStrengthAbilityScore = Math.min(overallStrengthAbilityScore + add, MAXIMUM_STRENGTH);
-        updateTracking();
-    }
-    public void subFromStrengthAbilityScore(int sub) {
-        this.overallStrengthAbilityScore = Math.max(overallStrengthAbilityScore - sub, MINIMUM_STRENGTH);
-        updateTracking();
+        this.overallStrengthAbilityScore = MathHelper.sumIntList(nums);
     }
 
     /*--------------------------------------*/
 
+    /**
+     * Bite attacks?
+     */
     private int jawStrength;
     private final int MINIMUM_JAW_STRENGTH = 1;
     private final int MAXIMUM_JAW_STRENGTH = 10000;
     public int getJawStrength() { return jawStrength; }
     public void addToJawStrength(int add) {
         this.jawStrength = Math.min(jawStrength + add, MAXIMUM_JAW_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromJawStrength(int sub) {
         this.jawStrength = Math.max(jawStrength - sub, MINIMUM_JAW_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
     /*--------------------------------------*/
 
+    /**
+     * Headbutts?
+     */
     private int neckStrength;
     private final int MINIMUM_NECK_STRENGTH = 1;
     private final int MAXIMUM_NECK_STRENGTH = 10000;
     public int getNeckStrength() { return neckStrength; }
     public void addToNeckStrength(int add) {
         this.neckStrength = Math.min(neckStrength + add, MAXIMUM_NECK_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromNeckStrength(int sub) {
         this.neckStrength = Math.max(neckStrength - sub, MINIMUM_NECK_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -69,12 +87,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getPectoralisStrength() { return pectoralisStrength; }
     public void addToPectoralisStrength(int add) {
         this.pectoralisStrength = Math.min(pectoralisStrength + add, MAXIMUM_PECTORALIS_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromPectoralisStrength(int sub) {
         this.pectoralisStrength = Math.max(pectoralisStrength - sub, MINIMUM_PECTORALIS_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -86,46 +104,46 @@ public class StrengthHolder extends PlayerCapability {
     public int getBackStrength() { return backStrength; }
     public void addToBackStrength(int add) {
         this.backStrength = Math.min(backStrength + add, MAXIMUM_BACK_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromBackStrength(int sub) {
         this.backStrength = Math.max(backStrength - sub, MINIMUM_BACK_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
     /*--------------------------------------*/
 
-    private int rightBicepStrength;
-    private final int MINIMUM_RIGHT_BICEP_STRENGTH = 1;
-    private final int MAXIMUM_RIGHT_BICEP_STRENGTH = 10000;
-    public int getRightBicepStrength() { return rightBicepStrength; }
-    public void addToRightBicepStrength(int add) {
-        this.rightBicepStrength = Math.min(rightBicepStrength + add, MAXIMUM_RIGHT_BICEP_STRENGTH);
-        addToStrengthAbilityScore(add);
+    private int rightUpperArmStrength;
+    private final int MINIMUM_RIGHT_UPPER_ARM_STRENGTH = 1;
+    private final int MAXIMUM_RIGHT_UPPER_ARM_STRENGTH = 10000;
+    public int getRightUpperArmStrength() { return rightUpperArmStrength; }
+    public void addToRightUpperArmStrength(int add) {
+        this.rightUpperArmStrength = Math.min(rightUpperArmStrength + add, MAXIMUM_RIGHT_UPPER_ARM_STRENGTH);
+        updateStrengthAbilityScore();
         updateTracking();
     }
-    public void subFromRightBicepStrength(int sub) {
-        this.rightBicepStrength = Math.max(rightBicepStrength - sub, MINIMUM_RIGHT_BICEP_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+    public void subFromRightUpperArmStrength(int sub) {
+        this.rightUpperArmStrength = Math.max(rightUpperArmStrength - sub, MINIMUM_RIGHT_UPPER_ARM_STRENGTH);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
     /*--------------------------------------*/
 
-    private int leftBicepStrength;
-    private final int MINIMUM_LEFT_BICEP_STRENGTH = 1;
-    private final int MAXIMUM_LEFT_BICEP_STRENGTH = 10000;
-    public int getLeftBicepStrength() { return leftBicepStrength; }
-    public void addToLeftBicepStrength(int add) {
-        this.leftBicepStrength = Math.min(leftBicepStrength + add, MAXIMUM_LEFT_BICEP_STRENGTH);
-        addToStrengthAbilityScore(add);
+    private int leftUpperArmStrength;
+    private final int MINIMUM_LEFT_UPPER_ARM_STRENGTH = 1;
+    private final int MAXIMUM_LEFT_UPPER_ARM_STRENGTH = 10000;
+    public int getLeftUpperArmStrength() { return leftUpperArmStrength; }
+    public void addToLeftUpperArmStrength(int add) {
+        this.leftUpperArmStrength = Math.min(leftUpperArmStrength + add, MAXIMUM_LEFT_UPPER_ARM_STRENGTH);
+        updateStrengthAbilityScore();
         updateTracking();
     }
-    public void subFromLeftBicepStrength(int sub) {
-        this.leftBicepStrength = Math.max(leftBicepStrength - sub, MINIMUM_LEFT_BICEP_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+    public void subFromLeftUpperArmStrength(int sub) {
+        this.leftUpperArmStrength = Math.max(leftUpperArmStrength - sub, MINIMUM_LEFT_UPPER_ARM_STRENGTH);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -137,12 +155,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getRightForearmStrength() { return rightForearmStrength; }
     public void addToRightForearmStrength(int add) {
         this.rightForearmStrength = Math.min(rightForearmStrength + add, MAXIMUM_RIGHT_FOREARM_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromRightForearmStrength(int sub) {
         this.rightForearmStrength = Math.max(rightForearmStrength - sub, MINIMUM_RIGHT_FOREARM_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -154,12 +172,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getLeftForearmStrength() { return leftForearmStrength; }
     public void addToLeftForearmStrength(int add) {
         this.leftForearmStrength = Math.min(leftForearmStrength + add, MAXIMUM_LEFT_FOREARM_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromLeftForearmStrength(int sub) {
         this.leftForearmStrength = Math.max(leftForearmStrength - sub, MINIMUM_LEFT_FOREARM_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -171,12 +189,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getCoreStrength() { return coreStrength; }
     public void addToCoreStrength(int add) {
         this.coreStrength = Math.min(coreStrength + add, MAXIMUM_CORE_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromCoreStrength(int sub) {
         this.coreStrength = Math.max(coreStrength - sub, MINIMUM_CORE_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -188,12 +206,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getRightThighStrength() { return rightThighStrength; }
     public void addToRightThighStrength(int add) {
         this.rightThighStrength = Math.min(rightThighStrength + add, MAXIMUM_RIGHT_THIGH_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromRightThighStrength(int sub) {
         this.rightThighStrength = Math.max(rightThighStrength - sub, MINIMUM_RIGHT_THIGH_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -205,12 +223,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getLeftThighStrength() { return leftThighStrength; }
     public void addToLeftThighStrength(int add) {
         this.leftThighStrength = Math.min(leftThighStrength + add, MAXIMUM_LEFT_THIGH_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromLeftThighStrength(int sub) {
         this.leftThighStrength = Math.max(leftThighStrength - sub, MINIMUM_LEFT_THIGH_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -222,12 +240,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getRightLowerLegStrength() { return rightLowerLegStrength; }
     public void addToRightLowerLegStrength(int add) {
         this.rightLowerLegStrength = Math.min(rightLowerLegStrength + add, MAXIMUM_RIGHT_LOWER_LEG_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromRightLowerLegStrength(int sub) {
         this.rightLowerLegStrength = Math.max(rightLowerLegStrength - sub, MINIMUM_RIGHT_LOWER_LEG_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -239,12 +257,12 @@ public class StrengthHolder extends PlayerCapability {
     public int getLeftLowerLegStrength() { return leftLowerLegStrength; }
     public void addToLeftLowerLegStrength(int add) {
         this.leftLowerLegStrength = Math.min(leftLowerLegStrength + add, MAXIMUM_LEFT_LOWER_LEG_STRENGTH);
-        addToStrengthAbilityScore(add);
+        updateStrengthAbilityScore();
         updateTracking();
     }
     public void subFromLeftLowerLegStrength(int sub) {
         this.leftLowerLegStrength = Math.max(leftLowerLegStrength - sub, MINIMUM_LEFT_LOWER_LEG_STRENGTH);
-        subFromStrengthAbilityScore(sub);
+        updateStrengthAbilityScore();
         updateTracking();
     }
 
@@ -271,8 +289,8 @@ public class StrengthHolder extends PlayerCapability {
         tag.putInt("neckStrength", this.neckStrength);
         tag.putInt("pectoralisStrength", this.pectoralisStrength);
         tag.putInt("backStrength", this.backStrength);
-        tag.putInt("rightBicepStrength", this.rightBicepStrength);
-        tag.putInt("leftBicepStrength", this.leftBicepStrength);
+        tag.putInt("rightBicepStrength", this.rightUpperArmStrength);
+        tag.putInt("leftBicepStrength", this.leftUpperArmStrength);
         tag.putInt("rightForearmStrength", this.rightForearmStrength);
         tag.putInt("leftForearmStrength", this.leftForearmStrength);
         tag.putInt("coreStrength", this.coreStrength);
@@ -290,8 +308,8 @@ public class StrengthHolder extends PlayerCapability {
         this.neckStrength = nbt.getInt("neckStrength");
         this.pectoralisStrength = nbt.getInt("pectoralisStrength");
         this.backStrength = nbt.getInt("backStrength");
-        this.rightBicepStrength = nbt.getInt("rightBicepStrength");
-        this.leftBicepStrength = nbt.getInt("leftBicepStrength");
+        this.rightUpperArmStrength = nbt.getInt("rightBicepStrength");
+        this.leftUpperArmStrength = nbt.getInt("leftBicepStrength");
         this.rightForearmStrength = nbt.getInt("rightForearmStrength");
         this.leftForearmStrength = nbt.getInt("leftForearmStrength");
         this.coreStrength = nbt.getInt("coreStrength");

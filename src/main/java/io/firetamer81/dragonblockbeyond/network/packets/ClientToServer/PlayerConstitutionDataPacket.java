@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.network.packets.ClientToServer;
 
 import dev._100media.capabilitysyncer.network.IPacket;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.constitution_data.ConstitutionHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.constitution_data.ConstitutionHolderAttacher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -46,11 +46,11 @@ public record PlayerConstitutionDataPacket() implements IPacket {
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
-                                "   - Current Right Bicep Constitution = " + constitution.getRightBicepConstitution())
+                                "   - Current Right Upper Arm Constitution = " + constitution.getRightUpperArmConstitution())
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
-                                "   - Current Left Bicep Constitution = " + constitution.getLeftBicepConstitution())
+                                "   - Current Left Upper Arm Constitution = " + constitution.getLeftUpperArmConstitution())
                         .withStyle(ChatFormatting.YELLOW));
 
                 player.sendSystemMessage(Component.literal(
@@ -101,8 +101,8 @@ public record PlayerConstitutionDataPacket() implements IPacket {
                 constitution.addToNeckConstitution(1);
                 constitution.addToChestConstitution(1);
                 constitution.addToBackConstitution(1);
-                constitution.addToRightBicepConstitution(1);
-                constitution.addToLeftBicepConstitution(1);
+                constitution.addToRightUpperArmConstitution(1);
+                constitution.addToLeftUpperArmConstitution(1);
                 constitution.addToRightForearmConstitution(1);
                 constitution.addToLeftForearmConstitution(1);
                 constitution.addToRightHandConstitution(1);
