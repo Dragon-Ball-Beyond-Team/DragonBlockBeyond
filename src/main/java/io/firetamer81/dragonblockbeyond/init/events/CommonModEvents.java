@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.init.events;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.player_condition.PlayerConditionHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.playerdatamodule.playercondition.PlayerConditionHolderAttacher;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

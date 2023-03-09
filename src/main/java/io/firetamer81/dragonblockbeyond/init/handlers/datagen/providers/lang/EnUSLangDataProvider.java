@@ -2,7 +2,7 @@ package io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers.lang;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
 import io.firetamer81.dragonblockbeyond.init.handlers.KeyBindHandler;
-import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
+import io.firetamer81.dragonblockbeyond.modules.namekmodule.NamekModule;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 

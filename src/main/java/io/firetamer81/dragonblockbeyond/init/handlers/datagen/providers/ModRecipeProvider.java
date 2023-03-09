@@ -1,6 +1,6 @@
 package io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers;
 
-import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
+import io.firetamer81.dragonblockbeyond.modules.namekmodule.NamekModule;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;

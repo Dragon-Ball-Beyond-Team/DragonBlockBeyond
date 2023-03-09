@@ -1,11 +1,8 @@
 package io.firetamer81.dragonblockbeyond.init.handlers.datagen.providers;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
+import io.firetamer81.dragonblockbeyond.modules.namekmodule.NamekModule;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

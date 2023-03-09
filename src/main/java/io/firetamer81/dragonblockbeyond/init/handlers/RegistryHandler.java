@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
+import io.firetamer81.dragonblockbeyond.modules.namekmodule.NamekModule;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

@@ -3,14 +3,9 @@ package io.firetamer81.dragonblockbeyond.network;
 import com.google.common.collect.ImmutableList;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.dexterity_data.DexterityHolderAttacher;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.constitution_data.ConstitutionHolderAttacher;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.intelligence_data.IntellectHolderAttacher;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.ki_mastery_data.KiMasteryHolderAttacher;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.resilience_data.ResilienceHolderAttacher;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.player_condition.PlayerConditionHolderAttacher;
-import io.firetamer81.dragonblockbeyond.modules.player_data_module.ability_scores.strength_data.StrengthHolderAttacher;
-import io.firetamer81.dragonblockbeyond.network.packets.ClientToServer.*;
+import io.firetamer81.dragonblockbeyond.modules.playerdatamodule.abilityscores.AbilityScoresHolderAttacher;
+import io.firetamer81.dragonblockbeyond.modules.playerdatamodule.playercondition.PlayerConditionHolderAttacher;
+import io.firetamer81.dragonblockbeyond.network.packets.clienttoserver.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -41,12 +36,7 @@ public class NetworkHandler {
                 .build();
 
         SimpleEntityCapabilityStatusPacket.registerRetriever(PlayerConditionHolderAttacher.RESOURCE_LOCATION, PlayerConditionHolderAttacher::getHolderUnwrap);
-        SimpleEntityCapabilityStatusPacket.registerRetriever(StrengthHolderAttacher.RESOURCE_LOCATION, StrengthHolderAttacher::getHolderUnwrap);
-        SimpleEntityCapabilityStatusPacket.registerRetriever(ConstitutionHolderAttacher.RESOURCE_LOCATION, ConstitutionHolderAttacher::getHolderUnwrap);
-        SimpleEntityCapabilityStatusPacket.registerRetriever(ResilienceHolderAttacher.RESOURCE_LOCATION, ResilienceHolderAttacher::getHolderUnwrap);
-        SimpleEntityCapabilityStatusPacket.registerRetriever(KiMasteryHolderAttacher.RESOURCE_LOCATION, KiMasteryHolderAttacher::getHolderUnwrap);
-        SimpleEntityCapabilityStatusPacket.registerRetriever(DexterityHolderAttacher.RESOURCE_LOCATION, DexterityHolderAttacher::getHolderUnwrap);
-        SimpleEntityCapabilityStatusPacket.registerRetriever(IntellectHolderAttacher.RESOURCE_LOCATION, DexterityHolderAttacher::getHolderUnwrap);
+        SimpleEntityCapabilityStatusPacket.registerRetriever(AbilityScoresHolderAttacher.RESOURCE_LOCATION, AbilityScoresHolderAttacher::getHolderUnwrap);
 
         packets.forEach(consumer -> consumer.accept(INSTANCE, getNextId()));
     }

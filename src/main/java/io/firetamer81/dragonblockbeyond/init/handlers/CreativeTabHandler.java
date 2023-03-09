@@ -1,7 +1,7 @@
 package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
-import io.firetamer81.dragonblockbeyond.modules.namek_module.NamekModule;
+import io.firetamer81.dragonblockbeyond.modules.namekmodule.NamekModule;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
