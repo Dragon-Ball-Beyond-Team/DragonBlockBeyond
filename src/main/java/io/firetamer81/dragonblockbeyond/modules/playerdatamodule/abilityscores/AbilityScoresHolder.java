@@ -3,7 +3,7 @@ package io.firetamer81.dragonblockbeyond.modules.playerdatamodule.abilityscores;
 import dev._100media.capabilitysyncer.core.PlayerCapability;
 import dev._100media.capabilitysyncer.network.EntityCapabilityStatusPacket;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
-import io.firetamer81.dragonblockbeyond.core.firelib.math.MathHelper;
+import io.firetamer81.dragonblockbeyond.core.firelib.util.MathHelper;
 import io.firetamer81.dragonblockbeyond.network.NetworkHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;

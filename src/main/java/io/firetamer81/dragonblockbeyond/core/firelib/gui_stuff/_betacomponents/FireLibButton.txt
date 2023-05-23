@@ -1,0 +1,158 @@
+package io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff._betacomponents;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff._alphacomponents._TestScreenComponent;
+import net.minecraft.resources.ResourceLocation;
+
+public class FireLibButton extends FireLibScreenComponent {
+    protected ResourceLocation buttonIcon;
+    protected String displayString;
+    private Runnable callback;
+
+    private ButtonContentType contentType = ButtonContentType.EMPTY;
+    private enum ButtonContentType {
+        EMPTY, HAS_ICON, HAS_TEXT, HAS_BOTH
+    }
+
+    private ButtonBackgroundType backgroundType;
+    private enum ButtonBackgroundType {
+        REPEATING_TEXTURE, SCALABLE_IMAGE, TRANSPARENT_FUTURISTIC, EMPTY_FRAME
+    }
+
+    public FireLibButton(int xPos, int yPos, int width, int height) {
+        super(xPos, yPos, width, height);
+    }
+
+    @Override
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partial) {
+        this.isHovered = mouseX >= getX() && mouseY >= getY() && mouseX < this.getX() + this.width && mouseY < getY() + this.height;
+        int bx = this.getX();
+        int mwidth = this.width;
+
+        int stringColor = 14737632;
+        if (packedFGColor != 0) {
+            stringColor = packedFGColor;
+        } else if (!this.isEnabled()) {
+            stringColor = 10526880;
+        } else if (this.hovered) {
+            stringColor = 16777120;
+        }
+
+        //<editor-fold desc="Draw Button Background">
+        fill(poseStack,
+                this.getX() - 1,
+                this.getY() - 1,
+                this.getX() + this.width + 1,
+                this.getY() + this.height + 1,
+                -6250336
+        );
+
+        fill(poseStack,
+                this.getX(),
+                this.getY(),
+                this.getX() + this.width,
+                this.getY() + this.height,
+                -16777216
+        );
+        //</editor-fold>
+
+        //<editor-fold desc="Draw Button Icon and/or text">
+        if (contentType == ButtonContentType.HAS_TEXT) {
+            String buttonText = this.displayString;
+            int strWidth = mc.font.width(buttonText);
+            int ellipsisWidth = mc.font.width("...");
+            if (strWidth > mwidth - 6 && strWidth > ellipsisWidth)
+                buttonText = mc.font.plainSubstrByWidth(buttonText, mwidth - 6 - ellipsisWidth).trim() + "...";
+
+            drawCenteredString(poseStack, mc.font, buttonText, bx + mwidth / 2, this.getY() + (this.height - 8) / 2, stringColor);
+        } else if (contentType == ButtonContentType.HAS_ICON) {
+
+        }
+        //</editor-fold>
+    }
+
+    public static class DefaultButtonIcons {
+        public static final ResourceLocation ADD = new ResourceLocation("firelib:textures/gui/buttonicons/add.png");
+        public static final ResourceLocation DELETE = new ResourceLocation("firelib:textures/gui/buttonicons/delete.png");
+        public static final ResourceLocation PLAY = new ResourceLocation("firelib:textures/gui/buttonicons/play.png");
+        public static final ResourceLocation PAUSE = new ResourceLocation("firelib:textures/gui/buttonicons/pause.png");
+        public static final ResourceLocation STOP = new ResourceLocation("firelib:textures/gui/buttonicons/stop.png");
+        public static final ResourceLocation ARROW_RIGHT = new ResourceLocation("firelib:textures/gui/buttonicons/arrow-right.png");
+        public static final ResourceLocation ARROW_LEFT = new ResourceLocation("firelib:textures/gui/buttonicons/arrow-left.png");
+
+        public DefaultButtonIcons() {}
+    }
+
+    public static class DefaultButtonBackgrounds {
+        public static final ResourceLocation REPEATING_ANDESITE = new ResourceLocation("textures/block/andesite.png");
+
+        public DefaultButtonBackgrounds() {}
+    }
+
+    //<editor-fold desc="Component Build Methods">
+    public final FireLibButton setText(String text) {
+        this.displayString = text;
+
+        if (contentType == ButtonContentType.EMPTY) {
+            contentType = ButtonContentType.HAS_TEXT;
+        } else if (contentType == ButtonContentType.HAS_ICON) {
+            contentType = ButtonContentType.HAS_BOTH;
+        }
+
+        return this;
+    }
+
+    public final FireLibButton setIcon(ResourceLocation iconTextureIn) {
+        this.buttonIcon = iconTextureIn;
+
+        if (contentType == ButtonContentType.EMPTY) {
+            contentType = ButtonContentType.HAS_ICON;
+        } else if (contentType == ButtonContentType.HAS_TEXT) {
+            contentType = ButtonContentType.HAS_BOTH;
+        }
+
+        return this;
+    }
+
+    public FireLibButton setClickAction(Runnable r) {
+        this.callback = r;
+
+        return this;
+    }
+
+    public FireLibButton setTooltips(String ... strings) {
+        super.setComponentTooltips(strings);
+
+        return this;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Interaction Methods">
+    @Override
+    public void mouseClick(double var1, double var3, int var5) {
+        this.playPressSound();
+
+        if (this.enabled) {
+            this.onClick();
+        }
+    }
+
+    @Override
+    public void mouseRelease(double var1, double var3, int var5) {}
+
+    @Override
+    public boolean charTyped(char var1, int var2) { return false; }
+    //</editor-fold>
+
+    //<editor-fold desc="Private Behaviour Methods">
+    private void onClick() {
+        if (this.callback != null) {
+            this.callback.run();
+        }
+    }
+
+    public String[] getTooltips() {
+        return super.getTooltips();
+    }
+    //</editor-fold>
+}

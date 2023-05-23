@@ -10,7 +10,7 @@ public class TextureHandler {
 
     public static SimpleSpriteObject BLUE_KI_BLAST_SPRITE;
 
-    private static final ResourceLocation BORDER_MAP_1 = new ResourceLocation(DragonBlockBeyond.MOD_ID, "textures/gui/gui_panel_border_styles_map1.png");
+    private static final ResourceLocation BORDER_MAP_1 = new ResourceLocation(DragonBlockBeyond.MOD_ID, "textures/gui/border_styles_map_1.png");
     public static BorderTextureObject BORDER_1;
     public static BorderTextureObject BORDER_2;
      **/

@@ -1,4 +1,4 @@
-package io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff.texture_objects;
+package io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff.dataholders;
 
 import net.minecraft.resources.ResourceLocation;
 

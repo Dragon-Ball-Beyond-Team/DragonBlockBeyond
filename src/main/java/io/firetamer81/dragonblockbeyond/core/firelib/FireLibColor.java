@@ -16,6 +16,10 @@ public class FireLibColor {
         value = 0xff000000 | rgb;
     }
 
+
+    /*===================================*/
+
+
     private void testColorValueRange(int r, int g, int b, int a) {
         boolean rangeError = false;
         String badComponentString = "";
@@ -56,6 +60,10 @@ public class FireLibColor {
     public int getRGBA() {
         return value;
     }
+
+
+    /*===================================*/
+
 
     public static float[] RGBtoHSB(int r, int g, int b) {
         float hue, saturation, brightness;

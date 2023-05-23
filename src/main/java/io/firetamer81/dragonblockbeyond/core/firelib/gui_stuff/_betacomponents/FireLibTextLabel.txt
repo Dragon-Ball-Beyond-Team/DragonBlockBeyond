@@ -1,0 +1,218 @@
+package io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff._betacomponents;
+
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import io.firetamer81.dragonblockbeyond.core.firelib.FireLibColor;
+import io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff._alphacomponents._TestScreenComponent;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class FireLibTextLabel extends FireLibScreenComponent {
+    private final int maxWidth;
+
+    private final List<String> textLines;
+    private final int textColor;
+    private final boolean isTextCentered;
+
+    private boolean shouldDrawBackground;
+    private int backGroundColor1;
+    private int backGroundColor2;
+
+    public FireLibTextLabel(FireLibTextLabel.FireLibLabelBuilder builder) {
+        super(builder.componentOriginX, builder.componentOriginY, 0, 0);
+
+        this.textLines = builder.textLines;
+        this.textColor = builder.textColor;
+        this.isTextCentered = builder.isTextCentered;
+
+        this.setX(builder.componentOriginX);
+        this.setY(builder.componentOriginY);
+
+        this.maxWidth = builder.maxWidth;
+
+        this.shouldDrawBackground = builder.shouldDrawBackground;
+        this.backGroundColor1 = builder.backGroundColor1;
+        this.backGroundColor2 = builder.backGroundColor2;
+
+        this.visible = true;
+    }
+
+    @Override
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partial) {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(
+                GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                GlStateManager.SourceFactor.ONE,
+                GlStateManager.DestFactor.ZERO
+        );
+
+        int i = this.getY() + this.height / 2;
+        int j = i - this.textLines.size() * 10 / 2;
+
+        for(int k = 0; k < this.textLines.size(); ++k) {
+            Component textComponent = Component.literal(this.textLines.get(k));
+            int textComponentWidth = this.renderer.width(textComponent);
+
+            //If "maxWidth" == -1, then a max width is not defined.
+            if ((maxWidth != -1) && (textComponentWidth > maxWidth)) {
+                mc.font.drawWordWrap(Component.literal(this.textLines.get(k)), this.getX(), this.getY(), maxWidth, 0xFFFFFF);
+            } else {
+                drawString(poseStack, this.renderer, this.textLines.get(k), this.getX(), j + k * 10, this.textColor);
+            }
+        }
+
+        //BoundingBox componentBounds = new BoundingBox(getX(), getY(), getX() + getWidth(), getY() + getHeight());
+
+        //vLine(poseStack, componentBounds.getLeftBound(), 0, this.height, 0xFFFFFF);
+        //hLine(poseStack, 0, this.width, componentBounds.getTopBound(), 0xFFFFFF);
+        //vLine(poseStack, componentBounds.getRightBound(), 0, this.height, 0xFFFFFF);
+        //hLine(poseStack, 0, this.width, componentBounds.getBottomBound(), 0xFFFFFF);
+    }
+
+
+    //<editor-fold desc="Set Methods">
+    /**
+     * This method replaces all stored text, and to add a new line you must place "\n" in the given string.
+     */
+    public FireLibTextLabel setText(String text) {
+        this.textLines.clear();
+        this.textLines.addAll(Arrays.asList(text.split("\n")));
+
+        return this;
+    }
+
+    /**
+     * This method simply adds a new line to the existing text without needing to put "\n" in the string
+     */
+    public FireLibTextLabel addLine(String p_175202_1_) {
+        this.textLines.add(I18n.get(p_175202_1_, new Object[0]));
+
+        return this;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Input Abstract Methods">
+    @Override
+    public void mouseClick(double var1, double var3, int var5) {}
+
+    @Override
+    public void mouseRelease(double var1, double var3, int var5) {}
+
+    @Override
+    public boolean charTyped(char var1, int var2) { return false; }
+    //</editor-fold>
+
+    public static class FireLibLabelBuilder {
+        //<editor-fold desc="Default Variables">
+        private int componentOriginX = 0;
+        private int componentOriginY = 0;
+        private int maxWidth = -1;
+
+        private final List<String> textLines = Lists.newArrayList();;
+        private int textColor = new FireLibColor(255, 255, 255, 255).getRGBA();
+        private boolean isTextCentered = false;
+
+        private boolean shouldDrawBackground = false;
+        private int backGroundColor1 = new FireLibColor(255, 255, 255, 255).getRGBA();
+        private int backGroundColor2 = new FireLibColor(255, 255, 255, 255).getRGBA();
+        //</editor-fold>
+
+        //<editor-fold desc="Position and Dimensions Build Methods">
+        public FireLibLabelBuilder setTopLeftCornerPosition(int xIn, int yIn) {
+            this.componentOriginX = xIn;
+            this.componentOriginY = yIn;
+
+            return this;
+        }
+
+        public FireLibLabelBuilder setMaxWidth(int widthIn, int heightIn) {
+            this.maxWidth = widthIn;
+
+            return this;
+        }
+
+        public FireLibLabelBuilder setMaxWidth(int widthIn) {
+            this.maxWidth = widthIn;
+
+            return this;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Text Build Methods">
+        /**
+         * This method replaces all stored text, and to add a new line you must place "\n" in the given string.
+         */
+        public FireLibLabelBuilder setText(String text) {
+            this.textLines.clear();
+            this.textLines.addAll(Arrays.asList(text.split("\n")));
+
+            return this;
+        }
+
+        /**
+         * This method simply adds a new line to the existing text without needing to put "\n" in the string
+         */
+        public FireLibLabelBuilder addLine(String p_175202_1_) {
+            this.textLines.add(I18n.get(p_175202_1_, new Object[0]));
+
+            return this;
+        }
+
+        public FireLibLabelBuilder setTextColor(FireLibColor textColorIn) {
+            this.textColor = textColorIn.getRGBA();
+
+            return this;
+        }
+
+        public FireLibLabelBuilder leftAlignText() {
+            this.isTextCentered = false;
+
+            return this;
+        }
+
+        public FireLibLabelBuilder centerAlignText() {
+            this.isTextCentered = true;
+
+            return this;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Background Build Methods">
+        public FireLibLabelBuilder drawSolidBackground(FireLibColor colorIn) {
+            this.shouldDrawBackground = true;
+            this.backGroundColor1 = colorIn.getRGBA();
+            this.backGroundColor2 = colorIn.getRGBA();
+
+            return this;
+        }
+
+        public FireLibLabelBuilder drawGradientBackground(FireLibColor color1In, FireLibColor color2In) {
+            this.shouldDrawBackground = true;
+            this.backGroundColor1 = color1In.getRGBA();
+            this.backGroundColor2 = color2In.getRGBA();
+
+            return this;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Validate & Build Methods">
+        private boolean validateSettings() {
+            return true;
+        }
+
+        public FireLibTextLabel build() {
+            if (validateSettings()) {
+                return new FireLibTextLabel(this);
+            } else {
+                return new FireLibTextLabel(new FireLibTextLabel.FireLibLabelBuilder().setText("Label Error"));
+            }
+        }
+        //</editor-fold>
+    }
+}

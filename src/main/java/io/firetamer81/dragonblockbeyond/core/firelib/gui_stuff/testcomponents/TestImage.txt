@@ -1,0 +1,329 @@
+package io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff.testcomponents;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import guilibshadow.cafe4j.image.ImageIO;
+import io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff.ImageUtil.ImageUtil;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraftforge.client.gui.ScreenUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+
+public class ASImage extends AdvancedScreenComponent {
+    private final DynamicTexture loadingTexture;
+    private final UUID imageUUID;
+    private DynamicTexture image;
+    private ASImageThread gif;
+    private ResourceLocation resLoc;
+    private Runnable callback;
+    private String errorTooltip;
+    private boolean imgLoaded;
+    private ASImageThread loadingGif;
+    private String imageURL;
+    private boolean keepAspectRatio;
+    private boolean acceptsNewImage;
+    private boolean doGifLoop;
+    private boolean shouldKeepSize;
+    private boolean resizingImage;
+
+    public ASImage(int x, int y, int width, int height, boolean doGifLoop) {
+        this(x, y, width, height);
+        this.doGifLoop = doGifLoop;
+    }
+
+    public ASImage(int x, int y, boolean doGifLoop) {
+        this(x, y);
+        this.doGifLoop = doGifLoop;
+    }
+
+    public ASImage(int x, int y, int width, int height) {
+        super(x, y, width, height);
+        this.loadingTexture = new DynamicTexture(32, 32, true);
+        this.imageUUID = UUID.randomUUID();
+        this.errorTooltip = "";
+        this.imgLoaded = true;
+        this.imageURL = null;
+        this.keepAspectRatio = true;
+        this.acceptsNewImage = true;
+        this.doGifLoop = true;
+        this.shouldKeepSize = true;
+        this.resizingImage = true;
+    }
+
+    public ASImage(int x, int y) {
+        super(x, y, 0, 0);
+        this.loadingTexture = new DynamicTexture(32, 32, true);
+        this.imageUUID = UUID.randomUUID();
+        this.errorTooltip = "";
+        this.imgLoaded = true;
+        this.imageURL = null;
+        this.keepAspectRatio = true;
+        this.acceptsNewImage = true;
+        this.doGifLoop = true;
+        this.shouldKeepSize = true;
+        this.resizingImage = true;
+        this.shouldKeepSize = false;
+    }
+
+    public void setKeepAspectRatio(boolean keepAspectRatio) {
+        this.keepAspectRatio = keepAspectRatio;
+        this.reloadImage();
+    }
+
+    private void reloadImage() {
+        if (this.imageURL != null) {
+            this.loadImage(this.imageURL);
+        }
+
+    }
+
+    public void setShouldKeepSize(boolean shouldKeepSize) {
+        this.shouldKeepSize = shouldKeepSize;
+    }
+
+    public String[] getTooltips() {
+        return !this.errorTooltip.isEmpty() ? (String[]) ArrayUtils.addAll(super.getTooltips(), new String[]{"", ChatFormatting.RED + "Error loading image:", ChatFormatting.RED + this.errorTooltip}) : super.getTooltips();
+    }
+
+    public String getImageURL() {
+        return this.imageURL;
+    }
+
+    public void setGifNotLooping() {
+        this.doGifLoop = false;
+    }
+
+    public void setGifLooping() {
+        this.doGifLoop = true;
+    }
+
+    public void loadImage(File file) {
+        try {
+            FileInputStream is = new FileInputStream(file);
+            this.loadImage((InputStream)is);
+        } catch (IOException var3) {
+            this.errorTooltip = var3.getCause() == null ? var3.getClass().getCanonicalName() + ": " + var3.getMessage() : var3.getCause().getLocalizedMessage();
+            this.image = null;
+            this.resLoc = null;
+            this.acceptsNewImage = true;
+        }
+
+    }
+
+    public void loadImage(ResourceLocation res) {
+        if (this.acceptsNewImage) {
+            Optional<Resource> resource = this.mc.getResourceManager().getResource(res);
+            if (!resource.isEmpty()) {
+                try {
+                    this.loadImage(((Resource)resource.get()).open());
+                } catch (IOException var4) {
+                    this.errorTooltip = var4.getCause() == null ? var4.getClass().getCanonicalName() + ": " + var4.getMessage() : var4.getCause().getLocalizedMessage();
+                    this.image = null;
+                    this.resLoc = null;
+                    this.acceptsNewImage = true;
+                }
+
+            }
+        }
+    }
+
+    public void loadImage(String url) {
+        if (this.acceptsNewImage) {
+            this.imageURL = url;
+            this.imgLoaded = false;
+            this.errorTooltip = "";
+            this.acceptsNewImage = false;
+            System.out.println("Starting to load " + url);
+            Thread t = new Thread(() -> {
+                try {
+                    ByteArrayInputStream is = ImageUtil.getInputStreamFromImageURL(url);
+                    this.acceptsNewImage = true;
+                    this.loadImage((InputStream)is);
+                } catch (IOException var4) {
+                    var4.printStackTrace();
+                    this.errorTooltip = var4.getCause() == null ? var4.getClass().getCanonicalName() + ": " + var4.getMessage() : var4.getCause().getLocalizedMessage();
+                    this.image = null;
+                    this.resLoc = null;
+                    this.acceptsNewImage = true;
+                }
+
+            });
+            t.setDaemon(true);
+            t.setName("Image download " + this.imageUUID.toString());
+            t.start();
+        }
+    }
+
+    public boolean isResizingImage() {
+        return this.resizingImage;
+    }
+
+    public void setResizingImage(boolean resizingImage) {
+        this.resizingImage = resizingImage;
+    }
+
+    public void loadImage(InputStream inp) {
+        if (this.gif != null && this.gif.isAlive()) {
+            this.gif.interrupt();
+        }
+
+        this.mc.execute(() -> {
+            try {
+                ByteArrayInputStream is = ImageUtil.convertToByteArrayIS(inp);
+                if (!this.shouldKeepSize || this.getWidth() == 0 || this.getComponentHeight() == 0) {
+                    BufferedImage img = ImageIO.read(is);
+                    this.setWidth(img.getWidth());
+                    this.setHeight(img.getHeight());
+                }
+
+                is.reset();
+
+                do {
+                    this.image = new DynamicTexture(this.getWidth(), this.getComponentHeight(), true);
+                } while(this.image.getPixels().asByteArray().length == 0);
+
+                Minecraft var10000 = this.mc;
+                DynamicTexture var10001 = this.image;
+                Objects.requireNonNull(var10001);
+                var10000.execute(var10001::upload);
+                this.imgLoaded = false;
+                this.errorTooltip = "";
+                this.acceptsNewImage = false;
+
+                Thread t = new Thread(() -> {
+                    try {
+                        if (ImageUtil.isISGif(is)) {
+                            this.gif = new ASImageThread(is, this.image, this.keepAspectRatio, this.doGifLoop, this.resizingImage);
+                            this.gif.start();
+                        } else {
+                            try {
+                                do {
+                                    this.image.setPixels(ImageUtil.getImageFromIS(is, this.keepAspectRatio, this.getWidth(), this.getComponentHeight(), this.resizingImage));
+                                } while(this.image.getPixels().asByteArray().length == 0);
+
+                                //var10000 = this.mc;
+                                //var10001 = this.image;
+                                Objects.requireNonNull(var10001);
+                                var10000.execute(var10001::upload);
+                                is.close();
+                            } catch (Exception var3) {
+                                var3.printStackTrace();
+                                this.errorTooltip = var3.getCause() == null ? var3.getClass().getCanonicalName() + ": " + var3.getMessage() : var3.getCause().getLocalizedMessage();
+                            }
+                        }
+                    } catch (Exception var4) {
+                        var4.printStackTrace();
+                        this.errorTooltip = var4.getCause() == null ? var4.getClass().getCanonicalName() + ": " + var4.getMessage() : var4.getCause().getLocalizedMessage();
+                        this.resLoc = null;
+                        this.acceptsNewImage = true;
+                        return;
+                    }
+
+                    this.resLoc = this.mc.getTextureManager().register("image_" + this.imageUUID.toString().toLowerCase(), this.image);
+                    this.acceptsNewImage = true;
+                    this.imgLoaded = true;
+                });
+                t.setDaemon(true);
+                t.setName("Image loader " + this.imageUUID.toString());
+                t.start();
+            } catch (Exception var4) {
+                var4.printStackTrace();
+            }
+
+        });
+    }
+
+    public void loadImage(URL url) {
+        this.loadImage(url.toString());
+    }
+
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partial) {
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
+        int c;
+        if (!this.errorTooltip.isEmpty()) {
+            c = (new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), 30)).getRGB();
+            ScreenUtils.drawGradientRect(poseStack.last().pose(), this.getBlitOffset(), this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, c, c);
+            RenderSystem.setShaderTexture(0, errorIcon);
+            blit(poseStack, this.getX() + this.getWidth() / 2 - 8, this.getY() + this.getComponentHeight() / 2 - 8, 0.0F, 0.0F, 16, 16, 16, 16);
+        } else {
+            if (this.imgLoaded) {
+                if (this.image == null) {
+                    c = (new Color(Color.DARK_GRAY.getRed(), Color.DARK_GRAY.getGreen(), Color.DARK_GRAY.getBlue(), 40)).getRGB();
+                    ScreenUtils.drawGradientRect(poseStack.last().pose(), this.getBlitOffset(), this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, c, c);
+                    return;
+                }
+
+                if (this.loadingGif != null && this.loadingGif.isAlive()) {
+                    this.loadingGif.interrupt();
+                }
+
+                RenderSystem.setShaderTexture(0, this.resLoc);
+                blit(poseStack, this.getX(), this.getY(), 0.0F, 0.0F, this.getWidth(), this.getComponentHeight(), this.getWidth(), this.getComponentHeight());
+            } else {
+                if (this.loadingGif == null || !this.loadingGif.isAlive()) {
+                    try {
+                        this.loadingGif = new ASImageThread(ImageUtil.convertToByteArrayIS(((Resource)this.mc.getResourceManager().getResource(new ResourceLocation("eguilib", "textures/gui/loading.gif")).get()).open()), this.loadingTexture, this.keepAspectRatio, this.doGifLoop, this.resizingImage);
+                    } catch (IOException var6) {
+                    }
+                }
+
+                if (!this.loadingGif.isAlive()) {
+                    this.loadingGif.start();
+                }
+
+                c = (new Color(Color.DARK_GRAY.getRed(), Color.DARK_GRAY.getGreen(), Color.DARK_GRAY.getBlue(), 40)).getRGB();
+                ScreenUtils.drawGradientRect(poseStack.last().pose(), this.getBlitOffset(), this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, c, c);
+                RenderSystem.setShaderTexture(0, this.mc.getTextureManager().register("loading-gif_" + this.imageUUID.toString().toLowerCase(), this.loadingTexture));
+                blit(poseStack, this.getX() + this.getWidth() / 2 - 16, this.getY() + this.getComponentHeight() / 2 - 16, 0.0F, 0.0F, 32, 32, 32, 32);
+            }
+
+        }
+    }
+
+    public final void mouseClick(double mouseX, double mouseY, int mouseButton) {
+        if (this.isEnabled()) {
+            this.onClick();
+        }
+    }
+
+    public void mouseRelease(double mouseX, double mouseY, int state) {
+    }
+
+    public void unload() {
+        if (this.gif != null && this.gif.isAlive()) {
+            this.gif.interrupt();
+        }
+
+        if (this.loadingGif != null && this.loadingGif.isAlive()) {
+            this.loadingGif.interrupt();
+        }
+    }
+
+    public boolean charTyped(char typedChar, int keyCode) {
+        return false;
+    }
+
+    public void onClick() {
+        if (this.callback != null) {
+            this.callback.run();
+        }
+
+    }
+
+    public void setCallback(Runnable callback) {
+        this.callback = callback;
+    }
+}

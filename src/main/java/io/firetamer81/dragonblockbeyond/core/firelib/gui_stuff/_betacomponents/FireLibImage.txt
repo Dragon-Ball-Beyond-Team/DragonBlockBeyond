@@ -1,0 +1,334 @@
+package io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff._betacomponents;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import io.firetamer81.dragonblockbeyond.core.firelib.FireLibColor;
+import io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff._alphacomponents._TestScreenComponent;
+import io.firetamer81.dragonblockbeyond.core.firelib.gui_stuff.dataholders.SpriteTextureObject;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.gui.ScreenUtils;
+
+import java.awt.*;
+
+public class FireLibImage extends FireLibScreenComponent {
+    private final SpriteTextureObject SPRITE;
+    private final String title;
+    private FireLibImageBuilder.TitlePosition titlePositionEnum;
+    private FireLibColor titleColor;
+
+    private boolean keepAspectRatio;
+    private final boolean shouldDrawBackground;
+    private final FireLibColor color1;
+    private final FireLibColor color2;
+    private final Runnable callback;
+
+    private final boolean shouldSizeComponentToScaledSprite;
+    private final int backgroundTopPadding;
+    private final int backgroundRightPadding;
+    private final int backgroundBottomPadding;
+    private final int backgroundLeftPadding;
+
+    private FireLibImage(FireLibImageBuilder builder) {
+        super(builder.componentOriginX, builder.componentOriginY, builder.componentWidth, builder.componentHeight);
+
+        this.SPRITE = builder.SPRITE;
+        this.title = builder.title;
+        this.titlePositionEnum = builder.titlePositionEnum;
+        this.titleColor = builder.titleColor;
+
+        this.keepAspectRatio = builder.keepAspectRatio;
+        this.shouldDrawBackground = builder.shouldDrawBackground;
+        this.color1 = builder.color1;
+        this.color2 = builder.color2;
+
+        this.callback = builder.callback;
+
+        this.shouldSizeComponentToScaledSprite = builder.shouldSizeComponentToScaledSprite;
+        this.backgroundTopPadding = builder.backgroundTopPadding;
+        this.backgroundRightPadding = builder.backgroundRightPadding;
+        this.backgroundBottomPadding = builder.backgroundBottomPadding;
+        this.backgroundLeftPadding = builder.backgroundLeftPadding;
+    }
+
+    //<editor-fold desc="Component Methods">
+    @Override
+    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+        //<editor-fold desc="Draw Sprite Background (Optional)">
+        if (shouldDrawBackground) {
+            ScreenUtils.drawGradientRect(
+                    pPoseStack.last().pose(),
+                    0,
+                    this.getX() - backgroundLeftPadding,
+                    this.getY() - backgroundTopPadding,
+                    this.getX() + this.getWidth() + backgroundRightPadding,
+                    this.getY() + this.getHeight() + backgroundBottomPadding,
+                    color1.getRGBA(),
+                    color2.getRGBA());
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Draw Component Title">
+        if (!this.title.isEmpty()) {
+            switch (titlePositionEnum) {
+                case LEFT_ALIGNED_TOP ->
+                        drawString(
+                                pPoseStack,
+                                Minecraft.getInstance().font,
+                                this.title,
+                                this.getX(),
+                                (this.getY() - 8),
+                                titleColor.getRGBA()
+                        );
+                case LEFT_ALIGNED_BOTTOM ->
+                        drawString(
+                                pPoseStack,
+                                Minecraft.getInstance().font,
+                                this.title,
+                                this.getX(),
+                                (this.getY() + this.getHeight() + 8),
+                                titleColor.getRGBA()
+                        );
+                case CENTER_ALIGNED_TOP ->
+                        drawCenteredString(
+                                pPoseStack,
+                                Minecraft.getInstance().font,
+                                this.title,
+                                this.getX(),
+                                (this.getY() - 8),
+                                titleColor.getRGBA()
+                        );
+                case CENTER_ALIGNED_BOTTOM ->
+                        drawCenteredString(
+                                pPoseStack,
+                                Minecraft.getInstance().font,
+                                this.title,
+                                this.getX(),
+                                (this.getY() + this.getHeight() + 8),
+                                titleColor.getRGBA()
+                        );
+            }
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Draw Sprite">
+        RenderSystem.setShaderTexture(0, SPRITE.getTextureResource());
+        int[] positionAndSizeData = SPRITE.getPositionAndSizeData();
+
+        //Find Scale Factor for the Sprite
+        Dimension sourceDim = new Dimension(positionAndSizeData[2], positionAndSizeData[3]);
+        Dimension destinationDim = new Dimension(this.getComponentWidth(), this.getComponentHeight());
+        double scaleX, scaleY;
+        scaleX = destinationDim.getWidth() / sourceDim.getWidth();
+        scaleY = destinationDim.getHeight() / sourceDim.getHeight();
+        double scale = Math.min(scaleX, scaleY);
+
+        //Original Positioning of Sprite
+        SPRITE.setTopLeftCornerTexturePosition(this.getComponentOriginX(), this.getComponentOriginY());
+
+        //Resizing Sprite (Respecting Aspect Ratio or Not)
+        if (keepAspectRatio) {
+            SPRITE.setTextureWidthAndHeight(
+                    (int) (positionAndSizeData[2] * scale),
+                    (int) (positionAndSizeData[3] * scale)
+            );
+        } else {
+            SPRITE.setTextureWidthAndHeight(this.getComponentWidth(), this.getComponentHeight());
+        }
+
+        //Position Sprite in Center of Component OR Sizing Component to Scaled Sprite
+        if ((positionAndSizeData[2] * scale) < this.getComponentWidth()) {
+            if (shouldSizeComponentToScaledSprite) {
+                this.setWidth((int) (positionAndSizeData[2] * scale));
+            } else {
+                int componentCenterX = this.getComponentOriginX() + (this.getComponentWidth() / 2);
+                int spriteWidth = (int) (positionAndSizeData[2] * scale);
+
+                SPRITE.setTopLeftCornerTexturePosition(
+                        componentCenterX - (spriteWidth / 2),
+                        this.getComponentOriginY()
+                );
+            }
+        }
+
+        if ((positionAndSizeData[3] * scale) < this.getComponentHeight()) {
+            if (shouldSizeComponentToScaledSprite) {
+                this.setHeight((int) (positionAndSizeData[3] * scale));
+            } else {
+                int componentCenterY = this.getComponentOriginY() + (this.getComponentHeight() / 2);
+                int spriteHeight = (int) (positionAndSizeData[3] * scale);
+
+                SPRITE.setTopLeftCornerTexturePosition(
+                        this.getComponentOriginX(),
+                        componentCenterY - (spriteHeight / 2)
+                );
+            }
+        }
+
+        //Render Sprite
+        blit(pPoseStack,
+                positionAndSizeData[0],
+                positionAndSizeData[1],
+                0,
+                0,
+                (int) (positionAndSizeData[2] * scale),
+                (int) (positionAndSizeData[3] * scale),
+                (int) (positionAndSizeData[2] * scale),
+                (int) (positionAndSizeData[3] * scale));
+        //</editor-fold>
+    }
+
+    @Override
+    public void mouseClick(double var1, double var3, int var5) {
+        if (this.isEnabled()) {
+            this.onClick();
+        }
+    }
+
+    public void onClick() {
+        if (this.callback != null) {
+            this.callback.run();
+        }
+    }
+
+    @Override
+    public void mouseRelease(double var1, double var3, int var5) {}
+
+    @Override
+    public boolean charTyped(char var1, int var2) { return false; }
+    //</editor-fold>
+
+    //<editor-fold desc="Getters">
+    public int getComponentOriginX() {
+        return this.getX();
+    }
+
+    public int getComponentOriginY() {
+        return this.getY();
+    }
+
+    public int getComponentWidth() {
+        return this.getWidth();
+    }
+
+    public int getComponentHeight() {
+        return this.getHeight();
+    }
+    //</editor-fold>
+
+    public static class FireLibImageBuilder {
+        private SpriteTextureObject SPRITE = new SpriteTextureObject(
+                new ResourceLocation("firelib", "textures/gui/sprites/error-message-sprite.png"),
+                64, 48
+        );
+        private String title = "";
+        private TitlePosition titlePositionEnum = TitlePosition.LEFT_ALIGNED_TOP;
+        private FireLibColor titleColor = new FireLibColor(255, 255, 255, 255);
+        private int componentOriginX = 0;
+        private int componentOriginY = 0;
+        private int componentWidth = 64;
+        private int componentHeight = 48;
+        private boolean keepAspectRatio = true;
+        private boolean shouldDrawBackground = false;
+        private FireLibColor color1 = new FireLibColor(1, 1, 1, 255);
+        private FireLibColor color2 = new FireLibColor(1, 1, 1, 255);
+        private Runnable callback = null;
+        private boolean shouldSizeComponentToScaledSprite = false;
+        private int backgroundTopPadding = 0;
+        private int backgroundRightPadding = 0;
+        private int backgroundBottomPadding = 0;
+        private int backgroundLeftPadding = 0;
+
+        public FireLibImageBuilder setSprite(SpriteTextureObject spriteIn) {
+            SPRITE = spriteIn;
+
+            return this;
+        }
+
+        public enum TitlePosition {
+            LEFT_ALIGNED_TOP,
+            LEFT_ALIGNED_BOTTOM,
+            CENTER_ALIGNED_TOP,
+            CENTER_ALIGNED_BOTTOM
+        }
+
+        public FireLibImageBuilder setTitle(String titleIn, FireLibImageBuilder.TitlePosition titlePositionEnum, FireLibColor textColor) {
+            this.title = titleIn;
+            this.titlePositionEnum = titlePositionEnum;
+            this.titleColor = textColor;
+
+            return this;
+        }
+
+        public FireLibImageBuilder setPos(int xIn, int yIn) {
+            this.componentOriginX = xIn;
+            this.componentOriginY = yIn;
+
+            return this;
+        }
+
+        public FireLibImageBuilder setDimensions(int widthIn, int heightIn) {
+            this.componentWidth = widthIn;
+            this.componentHeight = heightIn;
+
+            return this;
+        }
+
+        public FireLibImageBuilder shouldKeepAspectRatio(boolean bool) {
+            this.keepAspectRatio = bool;
+
+            return this;
+        }
+
+        public FireLibImageBuilder shouldDrawSolidBackground(FireLibColor colorIn) {
+            shouldDrawBackground = true;
+            color1 = colorIn;
+            color2 = colorIn;
+
+            return this;
+        }
+
+        public FireLibImageBuilder shouldDrawGradientBackground(FireLibColor color1In, FireLibColor color2In) {
+            shouldDrawBackground = true;
+            color1 = color1In;
+            color2 = color2In;
+
+            return this;
+        }
+
+        public FireLibImageBuilder setOnClickAction(Runnable r) {
+            this.callback = r;
+
+            return this;
+        }
+
+        public FireLibImageBuilder shouldSizeComponentToScaledSprite(boolean bool) {
+            this.shouldSizeComponentToScaledSprite = bool;
+
+            return this;
+        }
+
+        public FireLibImageBuilder setBackgroundPadding(int topPadding, int rightPadding, int bottomPadding, int leftPadding) {
+            this.backgroundTopPadding = topPadding;
+            this.backgroundRightPadding = rightPadding;
+            this.backgroundBottomPadding = bottomPadding;
+            this.backgroundLeftPadding = leftPadding;
+
+            return this;
+        }
+
+        private boolean validateSettings() {
+            return this.SPRITE != null ||
+                    !(componentOriginX < 0) ||
+                    !(componentOriginY < 0);
+        }
+
+        public FireLibImage build() {
+            if (validateSettings()) {
+                return new FireLibImage(this);
+            } else {
+                return new FireLibImage(new FireLibImageBuilder());
+            }
+        }
+    }
+}

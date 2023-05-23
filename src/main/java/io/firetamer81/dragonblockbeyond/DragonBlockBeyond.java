@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DragonBlockBeyond {
     public static final String MODID = "dragonblockbeyond";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public DragonBlockBeyond() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -34,12 +34,6 @@ public class DragonBlockBeyond {
         /*--------------------------------------*/
 
         PlayerConditionHolderAttacher.register();
-        //StrengthHolderAttacher.register();
-        //ConstitutionHolderAttacher.register();
-        //ResilienceHolderAttacher.register();
-        //KiMasteryHolderAttacher.register();
-        //DexterityHolderAttacher.register();
-        //IntellectHolderAttacher.register();
         AbilityScoresHolderAttacher.register();
     }
 

@@ -136,6 +136,11 @@ dependencies {
 
     // Suggestion Provider Fix
     runtimeOnly fg.deobf("curse.maven:suggestion-provider-fix-469647:${suggestion_provider_fix_file_id}")
+
+    //Temporary Reference Libraries
+    //implementation fg.deobf("curse.maven:erdbeerbaers_guis-332522:4258135")
+    //implementation fg.deobf("curse.maven:libgui_reforged-809396:4354973")
+    //implementation fg.deobf("curse.maven:architectury-419699:4384409")
 }
 
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', "${mod_id}.mixins.json".toString()]

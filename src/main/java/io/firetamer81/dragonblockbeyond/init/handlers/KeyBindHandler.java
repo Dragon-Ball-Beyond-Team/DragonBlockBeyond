@@ -2,9 +2,12 @@ package io.firetamer81.dragonblockbeyond.init.handlers;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import io.firetamer81.dragonblockbeyond.DragonBlockBeyond;
+import io.firetamer81.dragonblockbeyond.core.firelib._example_usages.FireLibExampleGUI;
+import io.firetamer81.dragonblockbeyond.core.firelib._example_usages.TestStretchyMovingSpriteScreen;
 import io.firetamer81.dragonblockbeyond.network.NetworkHandler;
 import io.firetamer81.dragonblockbeyond.network.packets.clienttoserver.*;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -40,13 +43,15 @@ public class KeyBindHandler {
         }
 
         if (STAT_DISPLAY_BUTTON.consumeClick()) {
-            NetworkHandler.INSTANCE.sendToServer(new PlayerConditionDataPacket());
-            NetworkHandler.INSTANCE.sendToServer(new PlayerStrengthDataPacket());
-            NetworkHandler.INSTANCE.sendToServer(new PlayerConstitutionDataPacket());
-            NetworkHandler.INSTANCE.sendToServer(new PlayerResilienceDataPacket());
-            NetworkHandler.INSTANCE.sendToServer(new PlayerDexterityDataPacket());
-            NetworkHandler.INSTANCE.sendToServer(new PlayerKiMasteryDataPacket());
-            NetworkHandler.INSTANCE.sendToServer(new PlayerIntelligenceDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerConditionDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerStrengthDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerConstitutionDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerResilienceDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerDexterityDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerKiMasteryDataPacket());
+            //NetworkHandler.INSTANCE.sendToServer(new PlayerIntelligenceDataPacket());
+
+            Minecraft.getInstance().setScreen(new FireLibExampleGUI());
         }
     }
 
